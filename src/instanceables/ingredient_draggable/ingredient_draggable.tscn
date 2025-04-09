@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp1h4sohnc7bt"]
+
+[ext_resource type="Script" uid="uid://dumxxus1007j5" path="res://src/instanceables/ingredient_draggable/ingredient_draggable.gd" id="1_4jc88"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uj8or"]
+
+[node name="IngredientDraggable" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+input_pickable = true
+script = ExtResource("1_4jc88")
+
+[node name="IngredientCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uj8or")
+
+[node name="IngredientSprite" type="Sprite2D" parent="."]
+
+[node name="SplashCast" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false

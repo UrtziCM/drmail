@@ -1,36 +1,47 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnkhr7hm063pj"]
+[gd_scene load_steps=4 format=3 uid="uid://cnkhr7hm063pj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uj8or"]
+[ext_resource type="Script" uid="uid://dwlr1qvwuni6t" path="res://src/scenes/ingredient_picking_handler.gd" id="1_7o4g6"]
+[ext_resource type="Script" uid="uid://04ix580gocb2" path="res://src/scenes/alchemy_engine.gd" id="1_l0m2p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l0m2p"]
+radius = 138.014
 
 [node name="Alchemy" type="Node2D"]
 
+[node name="AlchemyEngine" type="Node" parent="." groups=["Engines"]]
+script = ExtResource("1_l0m2p")
+
+[node name="IngredientPickingHandler" type="Node" parent="."]
+script = ExtResource("1_7o4g6")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="TabContainer" type="TabContainer" parent="CanvasLayer"]
+[node name="IngredientTabs" type="TabContainer" parent="CanvasLayer"]
 offset_left = 452.0
 offset_right = 639.0
 offset_bottom = 360.0
 tab_alignment = 1
 current_tab = 0
 
-[node name="Ingredientes" type="ItemList" parent="CanvasLayer/TabContainer"]
+[node name="Ingredientes" type="ItemList" parent="CanvasLayer/IngredientTabs"]
 layout_mode = 2
+auto_width = true
+auto_height = true
 item_count = 1
-max_columns = 2
 item_0/text = "Menta"
 metadata/_tab_index = 0
 
-[node name="Extras" type="ItemList" parent="CanvasLayer/TabContainer"]
+[node name="Extras" type="ItemList" parent="CanvasLayer/IngredientTabs"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Ingredient" type="CharacterBody2D" parent="."]
-collision_layer = 0
+[node name="CauldronArea" type="Area2D" parent="."]
+collision_layer = 2
 collision_mask = 0
-input_pickable = true
 
-[node name="IngredientCollider" type="CollisionShape2D" parent="Ingredient"]
-shape = SubResource("RectangleShape2D_uj8or")
+[node name="CauldronColisionShape" type="CollisionShape2D" parent="CauldronArea"]
+position = Vector2(226, 179)
+shape = SubResource("CircleShape2D_l0m2p")
 
-[node name="IngredientSprite" type="Sprite2D" parent="Ingredient"]
+[connection signal="item_clicked" from="CanvasLayer/IngredientTabs/Ingredientes" to="IngredientPickingHandler" method="_on_ingredient_clicked"]
