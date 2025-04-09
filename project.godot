@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-ResolutionSetter="*res://src/singletons/resolution_setter.gd"
+ResolutionSetter="*res://src/unique/singletons/resolution_setter.gd"
 
 [display]
 
@@ -30,6 +30,10 @@ window/stretch/scale_mode="integer"
 [global_group]
 
 Engines="All the engines and handlers of the game."
+
+[gui]
+
+theme/custom="uid://b2ua22bq3la3m"
 
 [layer_names]
 

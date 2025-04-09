@@ -11,9 +11,8 @@ radius = 138.014
 [node name="AlchemyEngine" type="Node" parent="." groups=["Engines"]]
 script = ExtResource("1_l0m2p")
 
-[node name="IngredientPickingHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientsTab")]
+[node name="IngredientPickingHandler" type="Node" parent="."]
 script = ExtResource("1_7o4g6")
-IngredientsTab = NodePath("../CanvasLayer/IngredientTabs")
 
 [node name="CauldronArea" type="Area2D" parent="."]
 editor_description = "Cauldron to drop ingredients into."

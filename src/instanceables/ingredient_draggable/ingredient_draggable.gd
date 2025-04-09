@@ -1,11 +1,19 @@
 extends CharacterBody2D
 
+
+const IngredientClass = preload("res://src/unique/classes/ingredients.gd")
+
 var dragging: bool = false
+@export_range(0.0,1.0,0.05,"or_greater")
+var dropping_animation_length: float
+
 
 @onready
 var splash_cast: RayCast2D = get_node("SplashCast")
 @onready
 var AlchemyEngine: Node = get_tree().get_first_node_in_group("Engines")
+
+var ingredient: IngredientClass.Ingredient
 
 func _process(delta: float) -> void:
 	if dragging:
@@ -18,12 +26,13 @@ func _input(event: InputEvent) -> void:
 		
 
 func _drop():
+	if !splash_cast.is_colliding(): 
+		queue_free()
 	var drop_tween: Tween = create_tween()
 	drop_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	drop_tween.set_ease(Tween.EASE_IN_OUT)
-	drop_tween.set_trans(Tween.TRANS_LINEAR)
-	drop_tween.parallel().tween_property(self,"scale",Vector2.ZERO,1)
-	drop_tween.parallel().tween_property(self,"rotation_degrees",90,1)
+	drop_tween.set_trans(Tween.TRANS_SINE)
+	drop_tween.parallel().tween_property(self,"scale",Vector2.ZERO,dropping_animation_length)
+	drop_tween.parallel().tween_property(self,"rotation_degrees",90,dropping_animation_length)
 	await drop_tween.finished
 	_splash()
 	queue_free()
@@ -33,6 +42,5 @@ func _splash():
 	# Play water plop sound
 	# Splash particles
 	if splash_cast.is_colliding():
-		AlchemyEngine.add_ingredient(self)
+		AlchemyEngine.add_ingredient(self.ingredient) 
 		
-	pass 

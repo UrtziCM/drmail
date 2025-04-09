@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b2ua22bq3la3m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qebqu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85qsl"]
+
+[resource]
+ItemList/styles/focus = SubResource("StyleBoxEmpty_qebqu")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_85qsl")

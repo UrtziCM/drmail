@@ -5,10 +5,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uj8or"]
 
 [node name="IngredientDraggable" type="CharacterBody2D"]
+top_level = true
 collision_layer = 0
 collision_mask = 0
 input_pickable = true
 script = ExtResource("1_4jc88")
+dropping_animation_length = 0.75
 
 [node name="IngredientCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_uj8or")
@@ -18,5 +20,5 @@ shape = SubResource("RectangleShape2D_uj8or")
 [node name="SplashCast" type="RayCast2D" parent="."]
 target_position = Vector2(0, 0)
 collision_mask = 2
+hit_from_inside = true
 collide_with_areas = true
-collide_with_bodies = false
