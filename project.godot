@@ -38,3 +38,4 @@ theme/custom="uid://b2ua22bq3la3m"
 [layer_names]
 
 2d_physics/layer_2="CauldronInside"
+2d_physics/layer_3="Spincasts"
