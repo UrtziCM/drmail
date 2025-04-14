@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
+const Ingredient = Classes.IngredientLib.Ingredient
 
-const IngredientClass = preload("res://src/unique/classes/ingredients.gd")
 
 var dragging: bool = false
 @export_range(0.0,1.0,0.05,"or_greater")
@@ -13,7 +13,7 @@ var splash_cast: RayCast2D = get_node("SplashCast")
 @onready
 var AlchemyEngine: Node = get_tree().get_first_node_in_group("Engines")
 
-var ingredient: IngredientClass.Ingredient
+var ingredient: Ingredient
 
 func _ready() -> void:
 	get_viewport().get_camera_2d().connect("stage_changed", _stage_changed)
