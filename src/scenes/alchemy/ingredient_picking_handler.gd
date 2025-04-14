@@ -8,11 +8,12 @@ var ingredient_draggable_instanceable: PackedScene = preload("res://src/instance
 
 
 
-func _on_ingredient_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
+func _on_ingredient_clicked(index: int, _at_position: Vector2, mouse_button_index: int) -> void:
+	if mouse_button_index != MOUSE_BUTTON_LEFT: # Only allow LClick
+		return
 	var ingredient = ingredient_draggable_instanceable.instantiate()
-	ingredient.position = get_viewport().get_mouse_position()
+	ingredient.position = get_viewport().get_camera_2d().position + _at_position
 
 	ingredient.ingredient = Ingredients.Ingredient.get_ingredient_by_name(IngredientsTab.get_child(IngredientsTab.current_tab).get_item_text(index))
 	add_child(ingredient)
 	ingredient.dragging = true
-	

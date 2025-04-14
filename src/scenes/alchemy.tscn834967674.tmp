@@ -1,0 +1,152 @@
+[gd_scene load_steps=6 format=3 uid="uid://cnkhr7hm063pj"]
+
+[ext_resource type="Script" uid="uid://dwlr1qvwuni6t" path="res://src/scenes/ingredient_picking_handler.gd" id="1_7o4g6"]
+[ext_resource type="Script" uid="uid://04ix580gocb2" path="res://src/scenes/alchemy_engine.gd" id="1_l0m2p"]
+[ext_resource type="Script" uid="uid://2ln3h4yy10g3" path="res://src/instanceables/spoon.gd" id="3_tpxyx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l0m2p"]
+radius = 128.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tpxyx"]
+radius = 16.0
+
+[node name="Alchemy" type="Node2D"]
+
+[node name="AlchemyEngine" type="Node" parent="." groups=["Engines"]]
+script = ExtResource("1_l0m2p")
+spin_slowing_speed = 0.25
+spin_accel_speed = 5.0
+potion_ending_speed = 100.0
+
+[node name="IngredientPickingHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientsTab")]
+script = ExtResource("1_7o4g6")
+IngredientsTab = NodePath("../CanvasLayer/IngredientTabs")
+
+[node name="CauldronArea" type="Area2D" parent="."]
+editor_description = "Cauldron to drop ingredients into."
+position = Vector2(224, 176)
+collision_layer = 2
+collision_mask = 0
+input_pickable = false
+
+[node name="CauldronColisionShape" type="CollisionShape2D" parent="CauldronArea"]
+shape = SubResource("CircleShape2D_l0m2p")
+
+[node name="SpinRaycast" type="Node2D" parent="CauldronArea"]
+
+[node name="SpinCast1" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(112, 0)
+target_position = Vector2(-80, 0)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast1"]
+wait_time = 0.33
+one_shot = true
+
+[node name="SpinCast2" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(-112, 0)
+target_position = Vector2(80, 0)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast2"]
+wait_time = 0.33
+one_shot = true
+
+[node name="SpinCast3" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(0, -112)
+target_position = Vector2(0, 80)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast3"]
+wait_time = 0.33
+one_shot = true
+
+[node name="SpinCast4" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(0, 112)
+target_position = Vector2(0, -80)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast4"]
+wait_time = 0.33
+one_shot = true
+
+[node name="SpinCast5" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(80, -80)
+target_position = Vector2(-64, 64)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast5"]
+wait_time = 0.33
+one_shot = true
+
+[node name="SpinCast6" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(80, 80)
+target_position = Vector2(-64, -64)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast6"]
+wait_time = 0.33
+one_shot = true
+
+[node name="SpinCast7" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(-72, 80)
+target_position = Vector2(56, -64)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast7"]
+wait_time = 0.33
+one_shot = true
+
+[node name="SpinCast8" type="RayCast2D" parent="CauldronArea/SpinRaycast"]
+position = Vector2(-72, -80)
+target_position = Vector2(56, 64)
+collision_mask = 4
+
+[node name="Timer" type="Timer" parent="CauldronArea/SpinRaycast/SpinCast8"]
+wait_time = 0.33
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="IngredientTabs" type="TabContainer" parent="CanvasLayer"]
+offset_left = 453.0
+offset_right = 640.0
+offset_bottom = 358.0
+tab_alignment = 1
+current_tab = 0
+
+[node name="Ingredientes" type="ItemList" parent="CanvasLayer/IngredientTabs"]
+layout_mode = 2
+auto_width = true
+auto_height = true
+item_count = 1
+item_0/text = "Menta"
+metadata/_tab_index = 0
+
+[node name="Extras" type="ItemList" parent="CanvasLayer/IngredientTabs"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Spoon" type="CharacterBody2D" parent="."]
+position = Vector2(392, 176)
+collision_layer = 4
+collision_mask = 0
+input_pickable = true
+script = ExtResource("3_tpxyx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spoon"]
+shape = SubResource("CircleShape2D_tpxyx")
+
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast1/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [0]]
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast2/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [1]]
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast3/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [2]]
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast4/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [3]]
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast5/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [5]]
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast6/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [5]]
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast7/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [6]]
+[connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast8/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [7]]
+[connection signal="item_clicked" from="CanvasLayer/IngredientTabs/Ingredientes" to="IngredientPickingHandler" method="_on_ingredient_clicked"]
+[connection signal="input_event" from="Spoon" to="Spoon" method="_on_spoon_click"]
+[connection signal="mouse_exited" from="Spoon" to="Spoon" method="_mouse_exited"]

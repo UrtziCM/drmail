@@ -13,12 +13,12 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed() and picked_up:
 		_let_go()
 
-func _on_spoon_click(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_spoon_click(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() and pickable:
 		_pick_up()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if picked_up:
 		position = get_viewport().get_mouse_position()
 

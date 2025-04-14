@@ -15,9 +15,12 @@ var AlchemyEngine: Node = get_tree().get_first_node_in_group("Engines")
 
 var ingredient: IngredientClass.Ingredient
 
-func _process(delta: float) -> void:
+func _ready() -> void:
+	get_viewport().get_camera_2d().connect("stage_changed", _stage_changed)
+
+func _process(_delta: float) -> void:
 	if dragging:
-		position = get_viewport().get_mouse_position()
+		position = get_viewport().get_camera_2d().position + get_viewport().get_mouse_position()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and dragging:
@@ -43,4 +46,7 @@ func _splash():
 	# Splash particles
 	if splash_cast.is_colliding():
 		AlchemyEngine.add_ingredient(self.ingredient) 
-		
+
+
+func _stage_changed(where_to: Vector2i):
+	queue_free()

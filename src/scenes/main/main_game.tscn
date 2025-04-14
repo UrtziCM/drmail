@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjg3rmv65duk3"]
+
+[ext_resource type="PackedScene" uid="uid://cnkhr7hm063pj" path="res://src/scenes/alchemy/alchemy.tscn" id="1_api85"]
+[ext_resource type="Script" uid="uid://bw0ewsxw4ul0a" path="res://src/scenes/main/stage_camera.gd" id="2_1rxwh"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Alchemy" parent="." instance=ExtResource("1_api85")]
+position = Vector2(640, 0)
+
+[node name="StageCamera" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("2_1rxwh")
+stages = Dictionary[String, Vector2i]({
+"alchemy": Vector2i(1, 0),
+"cards": Vector2i(0, 0),
+"terrace": Vector2i(1, -1)
+})

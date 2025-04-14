@@ -5,5 +5,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85qsl"]
 
 [resource]
+ItemList/colors/guide_color = Color(0, 0, 0, 0)
 ItemList/styles/focus = SubResource("StyleBoxEmpty_qebqu")
 TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_85qsl")
