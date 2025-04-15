@@ -63,7 +63,8 @@ MoveCameraRight={
 
 2d_physics/layer_2="CauldronInside"
 2d_physics/layer_3="Spincasts"
+2d_physics/layer_16="Clickable"
 
-[rendering]
+[physics]
 
-textures/canvas_textures/default_texture_filter=0
+2d/default_gravity_vector=Vector2(0, 0)

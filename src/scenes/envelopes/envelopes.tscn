@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvn4ia8a06nux"]
+
+[ext_resource type="PackedScene" uid="uid://bjwuuinnm6we6" path="res://src/instanceables/envelope/envelopes.tscn" id="1_02nep"]
+
+[node name="Envelopes" type="Node2D"]
+
+[node name="Envelopes" parent="." instance=ExtResource("1_02nep")]
+position = Vector2(320, 192)

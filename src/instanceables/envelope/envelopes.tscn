@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjwuuinnm6we6"]
+
+[ext_resource type="Script" uid="uid://bv1yqp1lbj2sq" path="res://src/instanceables/envelope/envelopes.gd" id="1_ut8op"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6crk"]
+size = Vector2(64, 32)
+
+[node name="Envelopes" type="CharacterBody2D"]
+collision_layer = 32768
+collision_mask = 0
+input_pickable = true
+script = ExtResource("1_ut8op")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_n6crk")
+
+[connection signal="input_event" from="." to="." method="on_envelope_start_drag"]
+[connection signal="input_event" from="." to="." method="_on_envelope_double_click"]
