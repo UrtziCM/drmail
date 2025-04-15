@@ -15,8 +15,9 @@ radius = 16.0
 
 [node name="Alchemy" type="Node2D"]
 
-[node name="AlchemyEngine" type="Node" parent="." groups=["Engines"]]
+[node name="AlchemyEngine" type="Node" parent="." node_paths=PackedStringArray("TemperatureHandler") groups=["Engines"]]
 script = ExtResource("1_l0m2p")
+TemperatureHandler = NodePath("../TemperatureHandler")
 spin_slowing_speed = 0.25
 spin_accel_speed = 5.0
 potion_ending_speed = 100.0

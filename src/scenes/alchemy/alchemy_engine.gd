@@ -4,6 +4,9 @@ const Ingredient = Classes.IngredientLib.Ingredient
 const Effect = Classes.IngredientLib.Effect
 const PotionClass = preload("res://src/unique/classes/potion.gd")
 
+@export
+var TemperatureHandler : Node
+
 var effects: Array[String]
 
 var raycast_tweens: Array[Tween] = []
@@ -93,6 +96,8 @@ func finish_potion():
 	
 	potion.sweetness = mix_sweetness
 	mix_sweetness = 0.
+	
+	potion.temperature = TemperatureHandler.temperature
 	
 	potion_history.append(potion.duplicate()) 
 	potion.clear()

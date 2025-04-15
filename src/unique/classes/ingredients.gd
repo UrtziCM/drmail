@@ -2,15 +2,14 @@ class Effect extends RefCounted:
 	var name: String
 	var target_gr: float
 	var overdose_ef: Effect
-	
+
 	var is_bad: bool
-		
+
 	var upwards_tolerancy: float
 	var downwards_tolerancy: float
-	
+
 	var perfect_dose = false
-	
-	
+
 	@warning_ignore("shadowed_variable")
 	func _init(name: String, target_gr: float, upwards_tolerancy: float = 0., downwards_tolerancy: float = 0., is_bad = false, overdose_ef: Effect = null) -> void:
 		self.name = name
@@ -24,7 +23,7 @@ class Effect extends RefCounted:
 		if perfect_dose:
 			return name + "+"
 		return name 
-	
+
 	func equals(ef: Effect) -> bool:
 		return (self.name == ef.name) && (self.perfect_dose == ef.perfect_dose)
 
@@ -63,12 +62,14 @@ class Ingredient extends RefCounted:
 	var good_effect_b: Effect 
 	var gr_b: float
 	var is_special: bool
+	
+	var desired_temperature: float
 
 	var sweetness: float
 	
 
 	@warning_ignore("shadowed_variable")
-	func _init(name: String, good_effect_a: Effect, gr_a: float, good_effect_b: Effect, gr_b: float, sweetness: float = 0., ) -> void:
+	func _init(name: String, good_effect_a: Effect, gr_a: float, good_effect_b: Effect, gr_b: float, sweetness: float = 0., desired_temperature: float = 3. ) -> void:
 		self.name = name
 		self.is_special = is_special
 		self.good_effect_a = good_effect_a
@@ -76,16 +77,17 @@ class Ingredient extends RefCounted:
 		self.good_effect_b = good_effect_b
 		self.gr_b = gr_b
 		self.sweetness = sweetness
-		
-	
-	static var MINT: Ingredient = new("Menta", Effect.ANTINFLAMATORY, 3., null, 0., 0.5)
+		self.desired_temperature = desired_temperature
+
+
+	static var MINT: Ingredient = new("Menta", Effect.ANTINFLAMATORY, 3., null, 0., 0.5, 1.)
 	static var SUGAR: Ingredient = new("Azúcar", null, 3., null, 0., 0.25)
 	
 	static var list: Array[Ingredient] = [
 		MINT,
 		SUGAR
 	]
-	
+
 	static var texture_dict: Dictionary[Ingredient,Texture2D] = {
 		MINT: preload("res://icon.svg"),
 		SUGAR: preload("res://icon.svg"),
@@ -97,6 +99,6 @@ class Ingredient extends RefCounted:
 			if ingredient.name.to_lower() == target.to_lower():
 				return ingredient
 		return null
-	
+
 	func _to_string() -> String:
 		return name

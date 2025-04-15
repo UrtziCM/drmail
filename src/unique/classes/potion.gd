@@ -9,6 +9,8 @@ class Potion extends RefCounted:
 	
 	var sweetness: float
 	
+	var temperature: float
+	
 	static var EMPTY = new([], [])
 	
 	@warning_ignore("shadowed_variable")
@@ -21,6 +23,7 @@ class Potion extends RefCounted:
 		ingredients = []
 		effects = []
 		sweetness = 0.
+		temperature = 0.
 
 	func is_potion_harming() -> bool:
 		for effect in effects:
@@ -29,17 +32,29 @@ class Potion extends RefCounted:
 		return false
 	
 	func _to_string() -> String:
-		return "Ingredients: " + str(ingredients) + "\nEffects: " + str(effects) + "\nSweetness: " + str(sweetness) + "\n\t- Is sweetness fine? " + str(is_sweetness_ok())
+		return "Ingredients: " + str(ingredients) + "\nEffects: " \
+		+ str(effects) \
+		+ "\nSweetness: " + str(sweetness) \
+		+ "\n\t- Is sweetness fine? " + str(is_sweetness_ok()) \
+		+ "\nSweetness: " + str(temperature) \
+		+ "\n\t- Is temp ok? " + str(is_temperature_ok())
 
 	func add_effect(ef: Effect):
 		effects.append(ef)
 
 	func add_ingredient(ing: Ingredient):
 		ingredients.append(ing)
-	
+
 	func is_sweetness_ok() -> bool:
 		return (sweetness <= 1.0) and (sweetness >= -1.0)
-		
+	
+	func is_temperature_ok() -> bool:
+		var sum_temperatures: float = 0.
+		for ingredient: Ingredient in ingredients:
+			sum_temperatures += ingredient.desired_temperature
+		var median = sum_temperatures / ingredients.size()
+		return temperature > median - 1 and temperature < median + 1
+	
 	func duplicate() -> Potion:
 		var dup = new(self.ingredients, self.effects)
 		dup.sweetness = sweetness
