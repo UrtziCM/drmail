@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnkhr7hm063pj"]
+[gd_scene load_steps=9 format=3 uid="uid://cnkhr7hm063pj"]
 
 [ext_resource type="Script" uid="uid://dwlr1qvwuni6t" path="res://src/scenes/alchemy/ingredient_picking_handler.gd" id="1_7o4g6"]
 [ext_resource type="Script" uid="uid://04ix580gocb2" path="res://src/scenes/alchemy/alchemy_engine.gd" id="1_l0m2p"]
 [ext_resource type="Script" uid="uid://clco2btno7wgi" path="res://src/scenes/alchemy/inventory_handler.gd" id="2_wruop"]
 [ext_resource type="Script" uid="uid://2ln3h4yy10g3" path="res://src/instanceables/spoon.gd" id="3_tpxyx"]
+[ext_resource type="Script" uid="uid://ckkytstvwqc7l" path="res://src/scenes/alchemy/temperature_handler.gd" id="4_kcvvk"]
+[ext_resource type="Texture2D" uid="uid://8635eqsig15p" path="res://icon.svg" id="5_8vpwj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l0m2p"]
 radius = 128.0
@@ -24,9 +26,14 @@ script = ExtResource("2_wruop")
 IngredientItemList = NodePath("../IngredientTabs/Ingredientes")
 ExtrasItemList = NodePath("../IngredientTabs/Extras")
 
-[node name="IngredientPickingHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientsTab")]
+[node name="IngredientPickingHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientsTab") groups=["Engines"]]
 script = ExtResource("1_7o4g6")
 IngredientsTab = NodePath("../IngredientTabs")
+
+[node name="TemperatureHandler" type="Node" parent="." node_paths=PackedStringArray("temp_slider", "fire_sprite") groups=["Engines"]]
+script = ExtResource("4_kcvvk")
+temp_slider = NodePath("../TemperatureSlider")
+fire_sprite = NodePath("../TemperatureSprite")
 
 [node name="CauldronArea" type="Area2D" parent="."]
 editor_description = "Cauldron to drop ingredients into."
@@ -146,6 +153,23 @@ item_count = 1
 item_0/text = "Azúcar"
 metadata/_tab_index = 1
 
+[node name="TemperatureSlider" type="VSlider" parent="."]
+offset_left = 32.0
+offset_top = 64.0
+offset_right = 48.0
+offset_bottom = 288.0
+max_value = 4.0
+value = 2.0
+rounded = true
+tick_count = 5
+ticks_on_borders = true
+
+[node name="TemperatureSprite" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(224, 176)
+scale = Vector2(1.375, 1.375)
+texture = ExtResource("5_8vpwj")
+
 [connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast1/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [0]]
 [connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast2/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [1]]
 [connection signal="timeout" from="CauldronArea/SpinRaycast/SpinCast3/Timer" to="AlchemyEngine" method="_raycast_timer_finished" binds= [2]]
@@ -158,3 +182,4 @@ metadata/_tab_index = 1
 [connection signal="mouse_exited" from="Spoon" to="Spoon" method="_mouse_exited"]
 [connection signal="item_clicked" from="IngredientTabs/Ingredientes" to="IngredientPickingHandler" method="_on_ingredient_clicked"]
 [connection signal="item_clicked" from="IngredientTabs/Extras" to="IngredientPickingHandler" method="_on_ingredient_clicked"]
+[connection signal="value_changed" from="TemperatureSlider" to="TemperatureHandler" method="_temperature_slider_value_changed"]
