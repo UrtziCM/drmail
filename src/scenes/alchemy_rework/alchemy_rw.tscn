@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=4 uid="uid://l0275t8xlklw"]
+
+[ext_resource type="Script" uid="uid://cipqkh45vxv1h" path="res://src/scenes/alchemy_rework/alchemy_engine.gd" id="1_o51qu"]
+[ext_resource type="Script" uid="uid://cnbdsiullaf7m" path="res://src/scenes/alchemy_rework/inventory_handler.gd" id="2_6ltwf"]
+[ext_resource type="Script" uid="uid://brvessbolaby8" path="res://src/scenes/alchemy_rework/ingredient_picking_handler.gd" id="3_lshtr"]
+[ext_resource type="TileSet" uid="uid://bp752s7egg0fe" path="res://src/unique/extras/tileset_alchemy.tres" id="4_bxucp"]
+
+[node name="Alchemy" type="Node2D"]
+
+[node name="AlchemyEngine" type="Node" parent="." node_paths=PackedStringArray("workplace_tilemap_layer", "ghost_tilemap_layer") groups=["Engines"]]
+script = ExtResource("1_o51qu")
+workplace_tilemap_layer = NodePath("../WorkPlaceTilemapLayer")
+ghost_tilemap_layer = NodePath("../PlaceGhostTilemapLayer")
+
+[node name="InventoryHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientItemList") groups=["Engines"]]
+script = ExtResource("2_6ltwf")
+IngredientItemList = NodePath("../PanelContainer/Ingredients")
+
+[node name="IngredientPickingHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientsItemList") groups=["Engines"]]
+script = ExtResource("3_lshtr")
+IngredientsItemList = NodePath("../PanelContainer/Ingredients")
+
+[node name="WorkPlaceTilemapLayer" type="TileMapLayer" parent="." groups=["Workplace"]]
+position = Vector2(228, 180)
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAAEAAMAAQABAAAAAAADAAMAAQABAAAAAAACAAMAAQABAAAAAAABAAMAAQABAAAAAAAAAAMAAQABAAAAAAD//wMAAQABAAAAAAD+/wMAAQABAAAAAAD9/wMAAQABAAAAAAD8/wMAAQABAAAAAAD7/wMAAQABAAAAAAD7/wIAAQABAAAAAAD7/wEAAQABAAAAAAD7/wAAAQABAAAAAAD7////AQABAAAAAAD7//7/AQABAAAAAAD7//3/AQABAAAAAAD7//z/AQABAAAAAAD8//z/AQABAAAAAAD9//z/AQABAAAAAAD+//z/AQABAAAAAAD///z/AQABAAAAAAAAAPz/AQABAAAAAAABAPz/AQABAAAAAAACAPz/AQABAAAAAAADAPz/AQABAAAAAAAEAPz/AQABAAAAAAAEAP3/AQABAAAAAAAEAP7/AQABAAAAAAAEAP//AQABAAAAAAAEAAAAAQABAAAAAAAEAAEAAQABAAAAAAAEAAIAAQABAAAAAAAFAPz/AQABAAAAAAAFAP3/AQABAAAAAAAFAP7/AQABAAAAAAAFAP//AQABAAAAAAAFAAAAAQABAAAAAAAFAAEAAQABAAAAAAAFAAIAAQABAAAAAAAFAAMAAQABAAAAAAAGAPz/AQABAAAAAAAGAP3/AQABAAAAAAAGAP7/AQABAAAAAAAGAP//AQABAAAAAAAGAAAAAQABAAAAAAAGAAEAAQABAAAAAAAGAAIAAQABAAAAAAAGAAMAAQABAAAAAAAHAPz/AQABAAAAAAAHAP3/AQABAAAAAAAHAP7/AQABAAAAAAAHAP//AQABAAAAAAAHAAAAAQABAAAAAAAHAAEAAQABAAAAAAAHAAIAAQABAAAAAAAHAAMAAQABAAAAAAAIAPz/AQABAAAAAAAIAP3/AQABAAAAAAAIAP7/AQABAAAAAAAIAP//AQABAAAAAAAIAAAAAQABAAAAAAAIAAEAAQABAAAAAAAIAAIAAQABAAAAAAAIAAMAAQABAAAAAAA=")
+tile_set = ExtResource("4_bxucp")
+
+[node name="PlaceGhostTilemapLayer" type="TileMapLayer" parent="." groups=["Workplace"]]
+modulate = Color(1, 1, 1, 0.498039)
+position = Vector2(228, 180)
+scale = Vector2(3, 3)
+tile_set = ExtResource("4_bxucp")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 440.0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Ingredients" type="ItemList" parent="PanelContainer"]
+layout_mode = 2
+allow_search = false
+item_count = 1
+same_column_width = true
+fixed_icon_size = Vector2i(32, 32)
+
+[node name="FinishPotionButton" type="Button" parent="."]
+offset_left = 176.0
+offset_top = 336.0
+offset_right = 288.0
+offset_bottom = 356.0
+text = "Finish"
+
+[connection signal="item_clicked" from="PanelContainer/Ingredients" to="IngredientPickingHandler" method="_on_ingredient_clicked"]
+[connection signal="pressed" from="FinishPotionButton" to="AlchemyEngine" method="_on_potion_finished"]

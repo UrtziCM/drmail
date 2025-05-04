@@ -1,8 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvn4ia8a06nux"]
+[gd_scene load_steps=3 format=3 uid="uid://cvn4ia8a06nux"]
 
-[ext_resource type="PackedScene" uid="uid://bjwuuinnm6we6" path="res://src/instanceables/envelope/envelopes.tscn" id="1_02nep"]
+[ext_resource type="Script" uid="uid://d064sdsuharrr" path="res://src/scenes/envelopes/envelopes.gd" id="1_e0cux"]
+[ext_resource type="Script" uid="uid://byg4kl4xi2woo" path="res://src/scenes/envelopes/card_text_fabricator.gd" id="2_e0cux"]
 
 [node name="Envelopes" type="Node2D"]
+script = ExtResource("1_e0cux")
 
-[node name="Envelopes" parent="." instance=ExtResource("1_02nep")]
-position = Vector2(320, 192)
+[node name="CardTextFabricator" type="Node" parent="."]
+script = ExtResource("2_e0cux")
+
+[node name="CardSpawnPosition" type="Marker2D" parent="."]
+position = Vector2(320, -64)
+rotation = 0.785398
+gizmo_extents = 32.0

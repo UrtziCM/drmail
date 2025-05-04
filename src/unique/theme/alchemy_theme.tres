@@ -1,10 +1,17 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b2ua22bq3la3m"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://b2ua22bq3la3m"]
+
+[ext_resource type="FontFile" uid="uid://b5k8xfbj75aji" path="res://src/unique/theme/fonts/KenneyPixel.ttf" id="1_85qsl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gf4gg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qebqu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85qsl"]
 
 [resource]
+default_font = ExtResource("1_85qsl")
+default_font_size = 16
+Button/styles/focus = SubResource("StyleBoxEmpty_gf4gg")
 ItemList/colors/guide_color = Color(0, 0, 0, 0)
 ItemList/styles/focus = SubResource("StyleBoxEmpty_qebqu")
 TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_85qsl")

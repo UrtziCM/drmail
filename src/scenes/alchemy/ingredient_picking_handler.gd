@@ -4,7 +4,7 @@ extends Node
 var IngredientsTab: TabContainer
 
 var Ingredients = preload("res://src/unique/classes/ingredients.gd")
-var ingredient_draggable_instanceable: PackedScene = preload("res://src/instanceables/ingredient_draggable/ingredient_draggable.tscn")
+var ingredient_draggable_instanceable: PackedScene = preload("res://src/instanceables/ingredient_draggable_rw/ingredient_draggable.tscn")
 
 
 

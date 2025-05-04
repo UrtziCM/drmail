@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dp1h4sohnc7bt"]
+[gd_scene load_steps=4 format=3 uid="uid://dp1h4sohnc7bt"]
 
-[ext_resource type="Script" uid="uid://dumxxus1007j5" path="res://src/instanceables/ingredient_draggable/ingredient_draggable.gd" id="1_4jc88"]
+[ext_resource type="Script" uid="uid://dumxxus1007j5" path="res://src/instanceables/ingredient_draggable_rw/ingredient_draggable.gd" id="1_4jc88"]
+[ext_resource type="TileSet" uid="uid://bp752s7egg0fe" path="res://src/unique/extras/tileset_alchemy.tres" id="2_aim65"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uj8or"]
 
@@ -11,6 +12,7 @@ collision_mask = 0
 input_pickable = true
 script = ExtResource("1_4jc88")
 dropping_animation_length = 0.75
+workplace_tileset = ExtResource("2_aim65")
 
 [node name="IngredientCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_uj8or")

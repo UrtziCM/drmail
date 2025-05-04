@@ -1,59 +1,4 @@
-class Effect extends RefCounted:
-	var name: String
-	var target_gr: float
-	var overdose_ef: Effect
-
-	var is_bad: bool
-
-	var upwards_tolerancy: float
-	var downwards_tolerancy: float
-
-	var perfect_dose = false
-
-	@warning_ignore("shadowed_variable")
-	func _init(name: String, target_gr: float, upwards_tolerancy: float = 0., downwards_tolerancy: float = 0., is_bad = false, overdose_ef: Effect = null) -> void:
-		self.name = name
-		self.target_gr = target_gr
-		self.upwards_tolerancy = upwards_tolerancy
-		self.downwards_tolerancy = downwards_tolerancy
-		self.is_bad = is_bad
-		self.overdose_ef = overdose_ef
-
-	func _to_string() -> String:
-		if perfect_dose:
-			return name + "+"
-		return name 
-
-	func equals(ef: Effect) -> bool:
-		return (self.name == ef.name) && (self.perfect_dose == ef.perfect_dose)
-
-	# AI = ANITNFLAMATORY
-	static var DROWZINESS: Effect = new("Drowziness", 0., 0., 1., true)
-	static var ANTINFLAMATORY: Effect = new("Anti-inflamattory", 9., 1., 1., false, DROWZINESS)
-
-	func is_effect_overdosed(gr: float) -> bool:
-		return gr > target_gr + upwards_tolerancy
-
-	func is_effect_underdosed(gr: float) -> bool:
-		return gr < target_gr - downwards_tolerancy
-
-	func is_effect_tolerated(gr: float) -> bool:
-		return not is_effect_underdosed(gr) and not is_effect_overdosed(gr)
-
-	func is_gr_perfect( gr: float) -> bool:
-		perfect_dose = is_equal_approx(target_gr, gr)
-		return perfect_dose
-
-	func is_same_effect(ef: Effect):
-		return (self.name == ef.name)
-
-	static var list: Array[Effect] = [
-		# GOOD
-		ANTINFLAMATORY,
-		
-		# BAD
-		DROWZINESS,
-	]
+const Effect = Classes.Effect
 
 class Ingredient extends RefCounted:
 	var name: String
@@ -67,21 +12,18 @@ class Ingredient extends RefCounted:
 
 	var sweetness: float
 	
+	var pattern: TileMapPattern
+	
+	const tileset_for_patterns: TileSet = preload("res://src/unique/extras/tileset_alchemy.tres")
 
 	@warning_ignore("shadowed_variable")
-	func _init(name: String, good_effect_a: Effect, gr_a: float, good_effect_b: Effect, gr_b: float, sweetness: float = 0., desired_temperature: float = 3. ) -> void:
+	func _init(name: String, pattern: TileMapPattern) -> void:
 		self.name = name
-		self.is_special = is_special
-		self.good_effect_a = good_effect_a
-		self.gr_a = gr_a
-		self.good_effect_b = good_effect_b
-		self.gr_b = gr_b
-		self.sweetness = sweetness
-		self.desired_temperature = desired_temperature
+		self.pattern = pattern
 
 
-	static var MINT: Ingredient = new("Menta", Effect.ANTINFLAMATORY, 3., null, 0., 0.5, 1.)
-	static var SUGAR: Ingredient = new("Azúcar", null, 3., null, 0., 0.25)
+	static var MINT: Ingredient = new("Menta", tileset_for_patterns.get_pattern(0))
+	static var SUGAR: Ingredient = new("Azúcar", tileset_for_patterns.get_pattern(2))
 	
 	static var list: Array[Ingredient] = [
 		MINT,
