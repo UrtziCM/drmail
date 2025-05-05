@@ -10,7 +10,7 @@ var original_position: Vector2
 
 var focused: bool = false
 
-var illness: Illness = Illness.NAUSEA
+var illness: Illness = Illness.create_random_illness()
 var opened: bool = false
 
 var rotate_to_zero_tween: Tween

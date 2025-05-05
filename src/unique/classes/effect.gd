@@ -37,12 +37,25 @@ class Effect extends RefCounted:
 
 	static var list: Array[Effect] = [
 		ANTI_INFLAMATORY,
+		ANTI_PIRETIC,
+		ANTI_ACID,
+		ANTI_TUSSIVE,
+		
+		ANTI_BIOTIC,
+		ANTI_HISTAMINIC,
+		ANTI_PARASITIC,
+		ANTI_FUNGHAL,
+		
+		LAXATIVE,
+		OPIATE,
+		MUCOLITIC,
+		NARCOTIC,
 	]
 
 class EffectWheel extends RefCounted:
-	var effects: Dictionary[int, Effect]
-	var wheel_size: int
-	func _init(effects: Array[Effect], positions: Array[int], size: int = 1.):
+	var effects: Dictionary[float, Effect]
+	var wheel_size: float
+	func _init(effects: Array[Effect], positions: Array[float], size: float = 1.):
 		positions.sort()
 		for i in range(effects.size()):
 			self.effects[positions[i]] = effects[i]
@@ -50,10 +63,32 @@ class EffectWheel extends RefCounted:
 	
 	func get_effect_at(value: int):
 		var effect_level = clamp(value / wheel_size,1,100)
-		value = value % wheel_size
-		var last_effect: Effect
+		value = value % int(wheel_size)
+		var last_effect: Effect = effects.values()[0]
 		for key in effects.keys():
-			if key > value:
+			print("( ",key," > ",float(value) / wheel_size, " )?")
+			if key > float(value) / wheel_size:
 				var effect_to_return: Effect = Effect.new(last_effect.name, last_effect.effect_id,effect_level)
 				return effect_to_return
 			last_effect = effects[key]
+	
+	static var GREEN_WHEEL = new(
+		[Effect.ANTI_BIOTIC,Effect.ANTI_HISTAMINIC, Effect.ANTI_PARASITIC, Effect.ANTI_FUNGHAL],
+		[.25,.50,.75,1],
+		10)
+	
+	static var ORANGE_WHEEL = new(
+		[Effect.ANTI_BIOTIC,Effect.ANTI_HISTAMINIC, Effect.ANTI_ACID, Effect.ANTI_TUSSIVE],
+		[.5,.7,.75,1],
+		10)
+
+	static var BLUE_WHEEL = new(
+		[Effect.LAXATIVE,Effect.OPIATE, Effect.MUCOLITIC, Effect.NARCOTIC],
+		[.35,.45,.90,1], 
+		10)
+	
+	static var list: Array[EffectWheel] = [
+		GREEN_WHEEL,
+		BLUE_WHEEL,
+		ORANGE_WHEEL,
+	]

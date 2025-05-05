@@ -59,7 +59,6 @@ func _drop():
 	if can_place_pattern:
 		workplace.set_pattern(dropped_position, used_pattern)
 		var pattern_positions = used_pattern.get_used_cells().duplicate()
-		print(dropped_position)
 		for index: int in pattern_positions.size():
 			pattern_positions[index] += dropped_position
 		pattern_positions = PackedVector2Array(pattern_positions)
@@ -67,7 +66,6 @@ func _drop():
 			AlchemyEngine.pattern_position_dict.get_or_add(cell + dropped_position,pattern_positions)
 	
 	ghost_layer.clear()
-	print(AlchemyEngine.pattern_position_dict)
 	_splash()
 	queue_free()
 

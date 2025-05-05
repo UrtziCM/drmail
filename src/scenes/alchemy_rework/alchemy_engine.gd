@@ -55,9 +55,13 @@ func gramage_added_to_existing_effect(effect: Effect, gramage: float):
 func _on_potion_finished() -> void:
 	effects.clear()
 	for cell in workplace_tilemap_layer.get_used_cells():
-		var effect_index = workplace_tilemap_layer.get_cell_tile_data(cell).get_custom_data("Effect")
+		var effect_index: int = workplace_tilemap_layer.get_cell_tile_data(cell).get_custom_data("Effect")
+		if not effect_index > 0: continue # Early return for non effect tiles
 		if effect_index not in effects.keys():
 			effects[effect_index] = 1
 		else:
 			effects[effect_index] += 1
 	print(effects)
+	print("------------------------")
+	for i in effects.size():
+		print(Classes.EffectWheel.list[i].get_effect_at(effects[i + 1]))

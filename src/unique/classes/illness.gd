@@ -98,4 +98,5 @@ class Illness extends RefCounted:
 				rand_symptom = Symptom.list.pick_random()
 			random_symptoms.append(Symptom.list.pick_random())
 		
-		var new_illness = new(random_symptoms)
+		return new(random_symptoms)
+		

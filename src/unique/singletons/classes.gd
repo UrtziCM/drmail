@@ -8,4 +8,5 @@ const IllnessLib = preload("res://src/unique/classes/illness.gd")
 const Illness = IllnessLib.Illness
 const Potion = PotionLib.Potion
 const Effect = EffectsLib.Effect
+const EffectWheel = EffectsLib.EffectWheel
 const Ingredient = IngredientLib.Ingredient
