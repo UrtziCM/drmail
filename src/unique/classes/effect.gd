@@ -66,7 +66,6 @@ class EffectWheel extends RefCounted:
 		value = value % int(wheel_size)
 		var last_effect: Effect = effects.values()[0]
 		for key in effects.keys():
-			print("( ",key," > ",float(value) / wheel_size, " )?")
 			if key > float(value) / wheel_size:
 				var effect_to_return: Effect = Effect.new(last_effect.name, last_effect.effect_id,effect_level)
 				return effect_to_return

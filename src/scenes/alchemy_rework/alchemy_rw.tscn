@@ -1,24 +1,27 @@
-[gd_scene load_steps=5 format=4 uid="uid://l0275t8xlklw"]
+[gd_scene load_steps=7 format=4 uid="uid://l0275t8xlklw"]
 
 [ext_resource type="Script" uid="uid://cipqkh45vxv1h" path="res://src/scenes/alchemy_rework/alchemy_engine.gd" id="1_o51qu"]
 [ext_resource type="Script" uid="uid://cnbdsiullaf7m" path="res://src/scenes/alchemy_rework/inventory_handler.gd" id="2_6ltwf"]
 [ext_resource type="Script" uid="uid://brvessbolaby8" path="res://src/scenes/alchemy_rework/ingredient_picking_handler.gd" id="3_lshtr"]
 [ext_resource type="TileSet" uid="uid://bp752s7egg0fe" path="res://src/unique/extras/tileset_alchemy.tres" id="4_bxucp"]
+[ext_resource type="Theme" uid="uid://b2ua22bq3la3m" path="res://src/unique/theme/alchemy_theme.tres" id="5_6ltwf"]
+[ext_resource type="Script" uid="uid://frmf00t4w3tn" path="res://src/scenes/alchemy_rework/save_mix_container.gd" id="5_lshtr"]
 
 [node name="Alchemy" type="Node2D"]
 
-[node name="AlchemyEngine" type="Node" parent="." node_paths=PackedStringArray("workplace_tilemap_layer", "ghost_tilemap_layer") groups=["Engines"]]
+[node name="AlchemyEngine" type="Node" parent="." node_paths=PackedStringArray("workplace_tilemap_layer", "ghost_tilemap_layer", "save_popup") groups=["Engines"]]
 script = ExtResource("1_o51qu")
 workplace_tilemap_layer = NodePath("../WorkPlaceTilemapLayer")
 ghost_tilemap_layer = NodePath("../PlaceGhostTilemapLayer")
+save_popup = NodePath("../SaveMixContainer")
 
 [node name="InventoryHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientItemList") groups=["Engines"]]
 script = ExtResource("2_6ltwf")
-IngredientItemList = NodePath("../PanelContainer/Ingredients")
+IngredientItemList = NodePath("../IngredientsContainer/Ingredients")
 
 [node name="IngredientPickingHandler" type="Node" parent="." node_paths=PackedStringArray("IngredientsItemList") groups=["Engines"]]
 script = ExtResource("3_lshtr")
-IngredientsItemList = NodePath("../PanelContainer/Ingredients")
+IngredientsItemList = NodePath("../IngredientsContainer/Ingredients")
 
 [node name="WorkPlaceTilemapLayer" type="TileMapLayer" parent="." groups=["Workplace"]]
 position = Vector2(228, 180)
@@ -32,12 +35,19 @@ position = Vector2(228, 180)
 scale = Vector2(3, 3)
 tile_set = ExtResource("4_bxucp")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="------- UI -------" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 offset_left = 440.0
 offset_right = 640.0
 offset_bottom = 360.0
 
-[node name="Ingredients" type="ItemList" parent="PanelContainer"]
+[node name="IngredientsContainer" type="PanelContainer" parent="."]
+offset_left = 440.0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Ingredients" type="ItemList" parent="IngredientsContainer"]
 layout_mode = 2
 allow_search = false
 item_count = 1
@@ -51,5 +61,109 @@ offset_right = 288.0
 offset_bottom = 356.0
 text = "Finish"
 
-[connection signal="item_clicked" from="PanelContainer/Ingredients" to="IngredientPickingHandler" method="_on_ingredient_clicked"]
+[node name="DisableAnythingElsePanel" type="Panel" parent="."]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 648.0
+offset_bottom = 368.0
+
+[node name="SaveMixContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("background_panel", "effects_rich_label")]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+offset_left = 80.0
+offset_top = 80.0
+offset_right = 384.0
+offset_bottom = 240.0
+script = ExtResource("5_lshtr")
+background_panel = NodePath("../DisableAnythingElsePanel")
+effects_rich_label = NodePath("ReviewContainer/EffectLabel")
+
+[node name="ReviewContainer" type="MarginContainer" parent="SaveMixContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("5_6ltwf")
+
+[node name="QuestionLabel" type="Label" parent="SaveMixContainer/ReviewContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "¿Quieres guardar la mezcla?"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="EffectLabel" type="RichTextLabel" parent="SaveMixContainer/ReviewContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[b]Efectos de la mezcla:[/b]
+
+[center]$Effect1 
+$Effect2 
+$Effect3﻿[/center]"
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SaveMixContainer/ReviewContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("5_6ltwf")
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="SaveMixContainer/ReviewContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Guardar"
+
+[node name="DeleteButton" type="Button" parent="SaveMixContainer/ReviewContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Descartar"
+
+[node name="NameAskingContainer" type="MarginContainer" parent="SaveMixContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("5_6ltwf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SaveMixContainer/NameAskingContainer"]
+layout_mode = 2
+theme_override_constants/separation = 36
+
+[node name="QuestionLabel" type="Label" parent="SaveMixContainer/NameAskingContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "¿Con qué nombre?"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="LineEdit" type="LineEdit" parent="SaveMixContainer/NameAskingContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Nombre de la mezcla"
+alignment = 1
+max_length = 24
+context_menu_enabled = false
+emoji_menu_enabled = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SaveMixContainer/NameAskingContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("5_6ltwf")
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="SaveMixContainer/NameAskingContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Guardar"
+
+[connection signal="item_clicked" from="IngredientsContainer/Ingredients" to="IngredientPickingHandler" method="_on_ingredient_clicked"]
 [connection signal="pressed" from="FinishPotionButton" to="AlchemyEngine" method="_on_potion_finished"]
+[connection signal="pressed" from="SaveMixContainer/ReviewContainer/HBoxContainer/SaveButton" to="SaveMixContainer" method="_on_save_button_pressed"]
+[connection signal="pressed" from="SaveMixContainer/ReviewContainer/HBoxContainer/DeleteButton" to="SaveMixContainer" method="_on_delete_button_pressed"]
+[connection signal="pressed" from="SaveMixContainer/NameAskingContainer/VBoxContainer/HBoxContainer/ConfirmButton" to="SaveMixContainer" method="_on_save_button_pressed"]

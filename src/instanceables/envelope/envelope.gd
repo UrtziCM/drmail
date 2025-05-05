@@ -13,30 +13,18 @@ var focused: bool = false
 var illness: Illness = Illness.create_random_illness()
 var opened: bool = false
 
-var rotate_to_zero_tween: Tween
+var envelope_ready: bool = false
 
 var panel: Control
+
+var root_scene: Node2D
 
 signal card_focused(card: CharacterBody2D)
 signal card_unfocused(card: CharacterBody2D)
 
-func _process(_delta: float) -> void:
-	if dragging: 
-		if offset != Vector2.ZERO:
-			offset = offset.move_toward(Vector2.ZERO, 5)
-		if rotation_degrees != 0 and not rotate_to_zero_tween:
-			rotate_to_zero_tween = create_tween()
-			rotate_to_zero_tween.set_trans(Tween.TRANS_SINE)
-			rotate_to_zero_tween.set_ease(Tween.EASE_OUT)
-			rotate_to_zero_tween.tween_property(self,"rotation_degrees", 0, 0.75)
-		position = get_global_mouse_position() - offset
-
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and not event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-		dragging = false
-
 func _show_envelope_contents():
+	if not envelope_ready: return
+	
 	original_position = position
 	opened = true
 	
@@ -67,9 +55,5 @@ func _hide_envelope_contents():
 	await bring_to_front_tween.finished
 	
 	focused = false
+	root_scene.focused_envelope = null
 	card_unfocused.emit(self)
-
-func _physics_process(delta: float) -> void:
-	if not dragging and scale == (Vector2.ONE):
-		move_and_slide()
-	velocity = velocity.move_toward(Vector2.ZERO, 20)

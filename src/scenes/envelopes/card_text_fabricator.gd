@@ -13,9 +13,9 @@ const family_members: Array[String] = [
 	"hijo",
 	"hermano",
 	"marido",
-	"hermana",
-	"hija",
-	"madre"
+	"cuñado",
+	"sobrino",
+	"abuelo"
 ]
 
 const bye_statements: Array[String] = [
