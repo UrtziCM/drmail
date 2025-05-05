@@ -70,13 +70,14 @@ ShowNotebook={
 [layer_names]
 
 2d_physics/layer_1="Medicine"
-2d_physics/layer_2="CauldronInside"
+2d_physics/layer_2="Letter"
 2d_physics/layer_3="Spincasts"
 2d_physics/layer_16="Clickable"
 
 [physics]
 
 2d/default_gravity_vector=Vector2(0, 0)
+2d/default_linear_damp=1.0
 
 [rendering]
 

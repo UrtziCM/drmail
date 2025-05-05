@@ -23,7 +23,7 @@ signal card_unfocused(card: CharacterBody2D)
 func _process(_delta: float) -> void:
 	if dragging: 
 		if offset != Vector2.ZERO:
-			offset = offset.move_toward(Vector2.ZERO, 1)
+			offset = offset.move_toward(Vector2.ZERO, 5)
 		if rotation_degrees != 0 and not rotate_to_zero_tween:
 			rotate_to_zero_tween = create_tween()
 			rotate_to_zero_tween.set_trans(Tween.TRANS_SINE)
@@ -68,3 +68,8 @@ func _hide_envelope_contents():
 	
 	focused = false
 	card_unfocused.emit(self)
+
+func _physics_process(delta: float) -> void:
+	if not dragging and scale == (Vector2.ONE):
+		move_and_slide()
+	velocity = velocity.move_toward(Vector2.ZERO, 20)

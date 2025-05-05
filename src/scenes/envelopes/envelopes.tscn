@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvn4ia8a06nux"]
+[gd_scene load_steps=4 format=3 uid="uid://cvn4ia8a06nux"]
 
 [ext_resource type="Script" uid="uid://d064sdsuharrr" path="res://src/scenes/envelopes/envelopes.gd" id="1_e0cux"]
 [ext_resource type="Script" uid="uid://byg4kl4xi2woo" path="res://src/scenes/envelopes/card_text_fabricator.gd" id="2_e0cux"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e0cux"]
 
 [node name="Envelopes" type="Node2D"]
 script = ExtResource("1_e0cux")
@@ -13,3 +15,23 @@ script = ExtResource("2_e0cux")
 position = Vector2(320, -64)
 rotation = 0.785398
 gizmo_extents = 32.0
+
+[node name="EnvelopeTexture" type="TextureRect" parent="."]
+offset_left = 72.0
+offset_top = 124.0
+offset_right = 248.0
+offset_bottom = 236.0
+texture = SubResource("PlaceholderTexture2D_e0cux")
+
+[node name="LetterAfterButton" type="Button" parent="EnvelopeTexture"]
+offset_left = 56.0
+offset_top = 124.0
+offset_right = 120.0
+offset_bottom = 148.0
+
+[node name="LetterBeforeButton" type="Button" parent="EnvelopeTexture"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = -36.0
+offset_right = 120.0
+offset_bottom = -12.0
