@@ -62,7 +62,7 @@ func _input(event: InputEvent) -> void:
 					envelope._show_envelope_contents() # show correspondence
 				else:
 					if envelope != focused_envelope: # Only do something when the envelope is new
-						focused_envelope._hide_envelope_contents()
+						await focused_envelope._hide_envelope_contents()
 						focused_envelope = envelope
 						envelope._show_envelope_contents()
 

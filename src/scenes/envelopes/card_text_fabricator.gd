@@ -2,6 +2,9 @@ extends Node
 
 const Illness = Classes.Illness
 
+#var GameManager: Node = get_tree().get_first_node_in_group("GameManager")
+
+
 const hello_statements: Array[String] = [
 	"Buenas Dr. $name,",
 	"Estimado Dr. $name,",
@@ -38,9 +41,13 @@ static func get_text_for_illness(illness: Illness) -> String:
 	return full_card
 
 static func create_card_panel(creator: Node2D):
+	var gm = Engine.get_main_loop().get_first_node_in_group("GameManager")
 	var card_panel = preload("res://src/instanceables/envelope/card_panel.tscn").instantiate()
 	card_panel.get_node("Text").text = get_text_for_illness(creator.illness)
 	card_panel.get_node("ExitButton").connect("pressed", creator._hide_envelope_contents)
 	creator.panel = card_panel
+	var send_list: ItemList = creator.panel.get_node("MixToSendList")
+	for item in gm.saved_mix_dict.keys():
+		send_list.add_item(item)
 	creator.add_child(card_panel)
 	

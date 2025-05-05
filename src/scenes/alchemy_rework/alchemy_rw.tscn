@@ -50,7 +50,6 @@ offset_bottom = 360.0
 [node name="Ingredients" type="ItemList" parent="IngredientsContainer"]
 layout_mode = 2
 allow_search = false
-item_count = 1
 same_column_width = true
 fixed_icon_size = Vector2i(32, 32)
 
@@ -81,7 +80,6 @@ background_panel = NodePath("../DisableAnythingElsePanel")
 effects_rich_label = NodePath("ReviewContainer/EffectLabel")
 
 [node name="ReviewContainer" type="MarginContainer" parent="SaveMixContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("5_6ltwf")
 
@@ -166,4 +164,4 @@ text = "Guardar"
 [connection signal="pressed" from="FinishPotionButton" to="AlchemyEngine" method="_on_potion_finished"]
 [connection signal="pressed" from="SaveMixContainer/ReviewContainer/HBoxContainer/SaveButton" to="SaveMixContainer" method="_on_save_button_pressed"]
 [connection signal="pressed" from="SaveMixContainer/ReviewContainer/HBoxContainer/DeleteButton" to="SaveMixContainer" method="_on_delete_button_pressed"]
-[connection signal="pressed" from="SaveMixContainer/NameAskingContainer/VBoxContainer/HBoxContainer/ConfirmButton" to="SaveMixContainer" method="_on_save_button_pressed"]
+[connection signal="pressed" from="SaveMixContainer/NameAskingContainer/VBoxContainer/HBoxContainer/ConfirmButton" to="SaveMixContainer" method="_on_confirm_button_pressed"]

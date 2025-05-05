@@ -35,7 +35,7 @@ layout_mode = 0
 offset_left = 32.0
 offset_top = 32.0
 offset_right = 208.0
-offset_bottom = 248.0
+offset_bottom = 168.0
 
 [node name="ExitButton" type="Button" parent="."]
 layout_mode = 0
@@ -44,3 +44,20 @@ offset_top = 24.0
 offset_right = 216.0
 offset_bottom = 48.0
 text = "X"
+
+[node name="MixToSendList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 160.0
+offset_right = 208.0
+offset_bottom = 216.0
+select_mode = 1
+allow_search = false
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 224.0
+offset_right = 152.0
+offset_bottom = 248.0
+text = "Enviar"

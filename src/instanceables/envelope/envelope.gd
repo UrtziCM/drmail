@@ -52,8 +52,9 @@ func _hide_envelope_contents():
 	if panel:
 		panel.queue_free()
 	
+	focused = false
+	
 	await bring_to_front_tween.finished
 	
-	focused = false
 	root_scene.focused_envelope = null
 	card_unfocused.emit(self)

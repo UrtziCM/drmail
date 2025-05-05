@@ -4,9 +4,8 @@ const Ingredient = Classes.Ingredient
 const Effect = Classes.Effect
 const Potion = Classes.Potion
 
-var potion: Potion
-
-var potion_history: Array[Array] = []
+@onready
+var GameManager: Node = get_tree().get_first_node_in_group("GameManager")
 
 @export var workplace_tilemap_layer: TileMapLayer
 @export var ghost_tilemap_layer: TileMapLayer
@@ -14,12 +13,15 @@ var potion_history: Array[Array] = []
 @export var save_popup: PanelContainer
 
 var effects: Dictionary[int,int] = {}
+var effects_of_potion: Array[Effect]
 
 var pattern_position_dict: Dictionary[Vector2i, PackedVector2Array] = {}
 
 var last_hovered_cell: Vector2i
 
 var asking_for_save = false
+
+var saved_mix_dict: Dictionary[String, Array]
 
 func _process(delta: float) -> void:
 	if not asking_for_save:
@@ -42,10 +44,9 @@ func finish_potion():
 			effects[effect_index] = 1
 		else:
 			effects[effect_index] += 1
-	var effects_of_potion = []
+	effects_of_potion = []
 	for i in effects.size():
 		effects_of_potion.append(Classes.EffectWheel.list[i].get_effect_at(effects[i + 1]))
-	potion_history.append(effects_of_potion)
 	
 	if effects_of_potion.size() > 0:
 		if effects_of_potion.size() > 2:
@@ -55,6 +56,8 @@ func finish_potion():
 		else:
 			save_popup.set_effects_in_label(effects_of_potion[0].name)
 		save_popup.set_in_front(true)
+	
+	
 
 func _input(event: InputEvent) -> void:
 	_remove_pattern_if_clicked(event)

@@ -19,11 +19,15 @@ var envelope_stage: Node2D
 @export_category("Alchemy stage settings")
 @export
 var alchemy_stage: Node2D
+@onready
+var saved_mix_dict
 
 func _ready() -> void:
 	# Setup camera stuff
 	stage_camera.stages = stages
 	stage_camera.movement_animation_duration = animation_duration
+	await alchemy_stage.ready
+	saved_mix_dict = alchemy_stage.get_node("AlchemyEngine").saved_mix_dict
 
 
 func _camera_stage_changed(stage: Vector2i) -> void:
