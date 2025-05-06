@@ -3,60 +3,34 @@ const Effect = Classes.IngredientLib.Effect
 
 class Potion extends RefCounted:
 	var name: String
-	
-	var ingredients: Array[Ingredient]
 	var effects: Array[Effect]
+	var counts: Dictionary[int, int]
+	var mix_color: Color
 	
-	var sweetness: float
+	const orange = Color.ORANGE_RED
+	const green = Color.GREEN
+	const blue = Color.BLUE
 	
-	var temperature: float
-	
-	static var EMPTY = new([], [])
+	static var EMPTY = new([])
 	
 	@warning_ignore("shadowed_variable")
-	func _init(ingredients:Array[Ingredient], effects: Array[Effect]) -> void:
-		self.ingredients = ingredients
+	func _init(effects: Array[Effect]) -> void:
 		self.effects = effects
 
-	
-	func clear():
-		ingredients = []
-		effects = []
-		sweetness = 0.
-		temperature = 0.
+	func refresh_color_from_counts():
+		var total_count = 0
 
-	func is_potion_harming() -> bool:
-		for effect in effects:
-			if effect.is_bad:
-				return true
-		return false
-	
-	func _to_string() -> String:
-		return "Ingredients: " + str(ingredients) + "\nEffects: " \
-		+ str(effects) \
-		+ "\nSweetness: " + str(sweetness) \
-		+ "\n\t- Is sweetness fine? " + str(is_sweetness_ok()) \
-		+ "\nSweetness: " + str(temperature) \
-		+ "\n\t- Is temp ok? " + str(is_temperature_ok())
+		for value in counts.values():
+			total_count += value
+		
+
+	func clear():
+		effects = []
 
 	func add_effect(ef: Effect):
 		effects.append(ef)
 
-	func add_ingredient(ing: Ingredient):
-		ingredients.append(ing)
-
-	func is_sweetness_ok() -> bool:
-		return (sweetness <= 1.0) and (sweetness >= -1.0)
-	
-	func is_temperature_ok() -> bool:
-		var sum_temperatures: float = 0.
-		for ingredient: Ingredient in ingredients:
-			sum_temperatures += ingredient.desired_temperature
-		var median = sum_temperatures / ingredients.size()
-		return temperature > median - 1 and temperature < median + 1
 	
 	func duplicate() -> Potion:
-		var dup = new(self.ingredients, self.effects)
-		dup.sweetness = sweetness
-		
+		var dup = new(self.effects)
 		return dup

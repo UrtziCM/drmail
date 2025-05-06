@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjg3rmv65duk3"]
+[gd_scene load_steps=6 format=3 uid="uid://cjg3rmv65duk3"]
 
 [ext_resource type="Script" uid="uid://l7hd7836ch4q" path="res://src/scenes/main/game_manager.gd" id="1_6w3yq"]
 [ext_resource type="Script" uid="uid://bw0ewsxw4ul0a" path="res://src/scenes/main/stage_camera.gd" id="2_1rxwh"]
 [ext_resource type="PackedScene" uid="uid://l0275t8xlklw" path="res://src/scenes/alchemy_rework/alchemy_rw.tscn" id="2_otuef"]
 [ext_resource type="PackedScene" uid="uid://cvn4ia8a06nux" path="res://src/scenes/envelopes/envelopes.tscn" id="3_swx6c"]
+[ext_resource type="PackedScene" uid="uid://67pjl75oil2j" path="res://src/scenes/potion_check/check_potions.tscn" id="5_otuef"]
 
 [node name="Main" type="Node2D"]
 
@@ -31,5 +32,8 @@ envelope_layer = 32768
 [node name="StageCamera" type="Camera2D" parent="."]
 anchor_mode = 0
 script = ExtResource("2_1rxwh")
+
+[node name="CheckPotions" parent="." instance=ExtResource("5_otuef")]
+position = Vector2(640, 360)
 
 [connection signal="stage_changed" from="StageCamera" to="GameManager" method="_camera_stage_changed"]

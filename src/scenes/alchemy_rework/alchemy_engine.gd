@@ -21,7 +21,7 @@ var last_hovered_cell: Vector2i
 
 var asking_for_save = false
 
-var saved_mix_dict: Dictionary[String, Array]
+var saved_mix_dict: Dictionary[String, Potion] = {}
 
 func _process(delta: float) -> void:
 	if not asking_for_save:
@@ -44,9 +44,10 @@ func finish_potion():
 			effects[effect_index] = 1
 		else:
 			effects[effect_index] += 1
-	effects_of_potion = []
+	var new_potion: Potion = Potion.new([])
+	
 	for i in effects.size():
-		effects_of_potion.append(Classes.EffectWheel.list[i].get_effect_at(effects[i + 1]))
+		new_potion.effects.append(Classes.EffectWheel.list[i].get_effect_at(effects[i + 1]))
 	
 	if effects_of_potion.size() > 0:
 		if effects_of_potion.size() > 2:

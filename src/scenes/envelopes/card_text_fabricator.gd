@@ -49,5 +49,10 @@ static func create_card_panel(creator: Node2D):
 	var send_list: ItemList = creator.panel.get_node("MixToSendList")
 	for item in gm.saved_mix_dict.keys():
 		send_list.add_item(item)
+	var send_button = card_panel.get_node("SendButton")
+	send_button.connect("pressed", send_button.get_parent().queue_free)
+	send_button.connect("pressed", creator.queue_free)
+	
+	
 	creator.add_child(card_panel)
 	
