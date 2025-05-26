@@ -1,7 +1,9 @@
 extends Node2D
 
+const Potion = Classes.Potion
+
 @onready
-var mix_dict: Dictionary[String, Array] = get_tree().get_first_node_in_group("GameManager").saved_mix_dict
+var mix_dict: Dictionary[String, Potion] = get_tree().get_first_node_in_group("GameManager").saved_mix_dict
 @onready
 var NameLabel: Label = get_node("PanelContainer/MarginContainer/VBoxContainer/NameLabel")
 @onready
@@ -20,7 +22,7 @@ func _process(delta: float) -> void:
 	_refresh_ui()
 
 func _ready() -> void:
-	liquid_ball.visible = false
+	liquid_ball.visible = true
 
 func _refresh_ui():
 	var index = 0

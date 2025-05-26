@@ -37,11 +37,11 @@ class Effect extends RefCounted:
 
 	static var list: Array[Effect] = [
 		ANTI_INFLAMATORY,
+		ANTI_BIOTIC,
 		ANTI_PIRETIC,
+		
 		ANTI_ACID,
 		ANTI_TUSSIVE,
-		
-		ANTI_BIOTIC,
 		ANTI_HISTAMINIC,
 		ANTI_PARASITIC,
 		ANTI_FUNGHAL,

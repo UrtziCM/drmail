@@ -6,10 +6,10 @@ const Illness = Classes.Illness
 
 
 const hello_statements: Array[String] = [
-	"Buenas Dr. $name,",
-	"Estimado Dr. $name,",
+	"Buenas Dr. Mail,",
+	"Estimado Dr. Mail,",
 	"Hola,",
-	"Por favor ayudenos Dr. $name,"
+	"Por favor ayudenos Dr. Mail,"
 ]
 
 const family_members: Array[String] = [
