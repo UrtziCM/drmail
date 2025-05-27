@@ -67,7 +67,7 @@ class Potion extends RefCounted:
 		{10: 5, 12:6, 15:8, 16:5}:list.keys()[12],
 		{10: 5, 11:6, 13:4, 14:4, 16:5}:list.keys()[13],
 		{10:5, 11:6, 12:3, 13:2, 14:8}:list.keys()[14],
-		
+		#10.5 11.6 13.4 45.4 16.5
 	}
 	
 	@warning_ignore("shadowed_variable")
@@ -90,7 +90,8 @@ class Potion extends RefCounted:
 	func potion_ingredient_effect_text() -> String:
 		var potion_ingredients_text: String = ""
 		var potion_effect_dict = Potion.MEDICINE_DICT.find_key(self)
-		if hide_type == HIDE_TYPE.NONE:
+		
+		if hide_type == HIDE_TYPE.NONE || Potion.list[self]:
 			for key in potion_effect_dict.keys():
 				potion_ingredients_text += str(potion_effect_dict[key] / Ingredient.list[key - 1].pattern_block_count) + "x " + Ingredient.list[key - 1].name + "\n"
 				prints(potion_effect_dict[key],"/",Ingredient.list[key - 1].pattern_block_count)
