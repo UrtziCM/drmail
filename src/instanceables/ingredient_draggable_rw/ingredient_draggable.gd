@@ -15,15 +15,14 @@ var workplace: TileMapLayer = get_tree().get_nodes_in_group("Workplace")[0]
 @export
 var workplace_tileset: TileSet 
 
+var current_rotation = 0
 
-#@onready
-#var splash_cast: RayCast2D = get_node("SplashCast")
 @onready
 var AlchemyEngine: Node = get_tree().get_first_node_in_group("Engines")
 
 var ingredient: Ingredient
 
-
+var index
 
 
 func _ready() -> void:
@@ -34,7 +33,7 @@ func _process(delta: float) -> void:
 	if dragging:
 		position = get_viewport().get_camera_2d().position + get_viewport().get_mouse_position()
 		ghost_layer.clear()
-		ghost_layer.set_pattern(workplace.local_to_map(workplace.to_local(position)), ingredient.pattern)
+		ghost_layer.set_pattern(workplace.local_to_map(workplace.to_local(position)), ingredient.patterns[current_rotation])
 		for used_cell in ghost_layer.get_used_cells():
 			if used_cell in workplace.get_used_cells():
 				ghost_layer.set_cell(used_cell,workplace_tileset.get_source_id(0),Vector2i(0,1))
@@ -43,14 +42,17 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and dragging:
 		_drop()
-		
-
+		current_rotation = 0
+	if Input.is_action_just_pressed("RotateRight"):
+		current_rotation = (current_rotation + 1) % 4
+	elif Input.is_action_just_pressed("RotateLeft"): 
+		current_rotation = (current_rotation - 1) % 4
 func _drop():
 	dragging = false;
 	
 	
 	var can_place_pattern: bool = true
-	var used_pattern = ingredient.pattern
+	var used_pattern = ingredient.patterns[current_rotation]
 	var dropped_position: Vector2i = workplace.local_to_map(workplace.to_local(position))
 	for cell: Vector2i in used_pattern.get_used_cells():
 		if workplace.get_used_cells().has(cell + dropped_position):
@@ -64,6 +66,7 @@ func _drop():
 		pattern_positions = PackedVector2Array(pattern_positions)
 		for cell in used_pattern.get_used_cells():
 			AlchemyEngine.pattern_position_dict.get_or_add(cell + dropped_position,pattern_positions)
+		AlchemyEngine.dropped(self, used_pattern.get_used_cells()[0] + dropped_position)
 	
 	ghost_layer.clear()
 	_splash()

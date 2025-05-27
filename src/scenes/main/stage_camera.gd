@@ -21,6 +21,9 @@ func _input(event: InputEvent) -> void:
 			target_dir = Vector2i.UP
 		elif event.is_action("MoveCameraDown"):
 			target_dir = Vector2i.DOWN
+		else:
+			return
+		
 		
 		if _can_go_direction(target_dir): # If there is something that direction, go ahead
 			current_stage_position += target_dir
@@ -37,8 +40,8 @@ func move_to_stage_pos(target_pos: Vector2i):
 	
 	# Move to the target position using the viewport height and width (For future resolution scaling I guess)
 	stage_movement_tween.tween_property(self,"position",Vector2(unscaled_viewport_width, unscaled_viewport_height) * Vector2(target_pos), movement_animation_duration)
+	emit_signal("stage_changed", current_stage_position)
 	await stage_movement_tween.finished
-	emit_signal("stage_changed", current_stage_position) # JIC: For future polish
 
 func move_to_stage_name(target_name: String): 
 	var target_pos = stages[target_name]

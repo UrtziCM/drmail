@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvn4ia8a06nux"]
+[gd_scene load_steps=5 format=3 uid="uid://cvn4ia8a06nux"]
 
 [ext_resource type="Script" uid="uid://d064sdsuharrr" path="res://src/scenes/envelopes/envelopes.gd" id="1_e0cux"]
 [ext_resource type="Script" uid="uid://byg4kl4xi2woo" path="res://src/scenes/envelopes/card_text_fabricator.gd" id="2_e0cux"]
+[ext_resource type="Texture2D" uid="uid://0sff1k06ohyc" path="res://assets/patients/HealedPatient.png" id="3_vvjnt"]
+[ext_resource type="Texture2D" uid="uid://cf0na6kklrer6" path="res://assets/patients/DeceasedPatient.png" id="4_re7q0"]
 
 [node name="Envelopes" type="Node2D"]
 script = ExtResource("1_e0cux")
@@ -18,3 +20,44 @@ gizmo_extents = 32.0
 position = Vector2(320, -64)
 rotation = 0.785398
 gizmo_extents = 32.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 392.0
+offset_top = 296.0
+offset_right = 624.0
+offset_bottom = 344.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="CuredPatientTextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_vvjnt")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="CuredPatientsCountLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeceasedPatientsTextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_re7q0")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="DeceasedPatientsCountLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

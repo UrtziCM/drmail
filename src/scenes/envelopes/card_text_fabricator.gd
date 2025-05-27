@@ -1,8 +1,10 @@
 extends Node
 
 const Illness = Classes.Illness
+const Potion = Classes.Potion
 
-#var GameManager: Node = get_tree().get_first_node_in_group("GameManager")
+@onready
+var GameManager: Node = get_tree().get_first_node_in_group("GameManager")
 
 
 const hello_statements: Array[String] = [
@@ -47,12 +49,28 @@ static func create_card_panel(creator: Node2D):
 	card_panel.get_node("ExitButton").connect("pressed", creator._hide_envelope_contents)
 	creator.panel = card_panel
 	var send_list: ItemList = creator.panel.get_node("MixToSendList")
-	for item in gm.saved_mix_dict.keys():
-		send_list.add_item(item)
+	if gm.unlocked_potion_array().size() > 0:
+		for item: Potion in gm.unlocked_potion_array():
+			send_list.add_item(item._to_string())
 	var send_button = card_panel.get_node("SendButton")
+	
+	
+	send_button.connect("pressed", send.bind(creator,send_list))
 	send_button.connect("pressed", send_button.get_parent().queue_free)
 	send_button.connect("pressed", creator.queue_free)
 	
 	
 	creator.add_child(card_panel)
 	
+
+static func send(creator: Node2D,send_list: ItemList):
+	var gm = Engine.get_main_loop().get_first_node_in_group("GameManager")
+	
+	var selected_potions: Array[Potion] = []
+	for potion_index in send_list.get_selected_items():
+		var potion_name = send_list.get_item_text(potion_index)
+		selected_potions.append(Potion.get_potion_by_name(potion_name))
+	if creator.illness.apply_potions(selected_potions):
+		gm.add_healed()
+	else:
+		gm.add_deceased()

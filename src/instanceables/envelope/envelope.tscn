@@ -20,5 +20,5 @@ offset_top = -16.0
 offset_right = 32.0
 offset_bottom = 16.0
 
-[connection signal="input_event" from="." to="." method="_on_envelope_double_click"]
 [connection signal="input_event" from="." to="." method="on_envelope_start_drag"]
+[connection signal="input_event" from="." to="." method="_on_envelope_double_click"]

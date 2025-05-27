@@ -1,24 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://67pjl75oil2j"]
+[gd_scene load_steps=4 format=3 uid="uid://67pjl75oil2j"]
 
 [ext_resource type="Script" uid="uid://d061u7vl4xtku" path="res://src/scenes/potion_check/check_potions.gd" id="1_crjfe"]
-[ext_resource type="Shader" uid="uid://ct6spfwfjdu1e" path="res://src/shaders/fluid.gdshader" id="1_di3tt"]
 [ext_resource type="Theme" uid="uid://b2ua22bq3la3m" path="res://src/unique/theme/alchemy_theme.tres" id="2_7m6tr"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7m6tr"]
-shader = ExtResource("1_di3tt")
-shader_parameter/backFillColour = Color(0.62, 1, 1, 1)
-shader_parameter/frontFillInnerColour = Color(0.35, 1, 1, 1)
-shader_parameter/frontFillOuterColour = Color(0.355314, 0.355314, 0.355314, 1)
-shader_parameter/ringColour = Color(0, 0, 0, 1)
-shader_parameter/fresnelColour = Color(0.585062, 0.585062, 0.585062, 1)
-shader_parameter/innerRingGlowColour = Color(0.288518, 0.288518, 0.288518, 1)
-shader_parameter/fillcolour = Color(1, 1, 1, 1)
-shader_parameter/ringWidth = 0.0
-shader_parameter/innerCircleRadiusOffset = 0.15
-shader_parameter/fill_per = 0.617
-shader_parameter/resolution = 16.0
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_crjfe"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_crjfe"]
 font_size = 32
@@ -26,41 +9,23 @@ font_size = 32
 [node name="CheckPotions" type="Node2D"]
 script = ExtResource("1_crjfe")
 
-[node name="LiquidBall" type="TextureRect" parent="."]
-material = SubResource("ShaderMaterial_7m6tr")
-offset_left = 48.0
-offset_top = 96.0
-offset_right = 216.0
-offset_bottom = 264.0
-texture = SubResource("PlaceholderTexture2D_crjfe")
-
-[node name="PreviousButton" type="Button" parent="."]
-offset_left = 91.0
-offset_top = 56.0
-offset_right = 168.0
-offset_bottom = 80.0
-text = "Anterior"
-
-[node name="NextButton" type="Button" parent="."]
-offset_left = 91.0
-offset_top = 280.0
-offset_right = 168.0
-offset_bottom = 304.0
-text = "Siguiente"
-
 [node name="PanelContainer" type="PanelContainer" parent="."]
-offset_left = 256.0
-offset_top = 48.0
-offset_right = 576.0
-offset_bottom = 312.0
+offset_left = 48.0
+offset_top = 40.0
+offset_right = 592.0
+offset_bottom = 320.0
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="PageLeft" type="MarginContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/PageLeft"]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="PanelContainer/HBoxContainer/PageLeft/VBoxContainer"]
 layout_mode = 2
 text = "nombre"
 label_settings = SubResource("LabelSettings_crjfe")
@@ -68,7 +33,46 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="EffectsLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="PotionFlask" type="TextureRect" parent="PanelContainer/HBoxContainer/PageLeft/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_7m6tr")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="WorksWithTitleLabel" type="Label" parent="PanelContainer/HBoxContainer/PageLeft/VBoxContainer"]
+layout_mode = 2
+text = "funciona como:"
+label_settings = SubResource("LabelSettings_crjfe")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="WorksWithLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer/PageLeft/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_7m6tr")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PageRight" type="MarginContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/PageRight"]
+layout_mode = 2
+
+[node name="IngredientLabel" type="Label" parent="PanelContainer/HBoxContainer/PageRight/VBoxContainer"]
+layout_mode = 2
+text = "Ingredientes"
+label_settings = SubResource("LabelSettings_crjfe")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="IngredientsRichLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer/PageRight/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("2_7m6tr")
@@ -80,17 +84,19 @@ $Effect3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WorksWithTitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "funciona para:"
-label_settings = SubResource("LabelSettings_crjfe")
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
+[node name="PreviousButton" type="Button" parent="."]
+offset_left = 48.0
+offset_top = 328.0
+offset_right = 125.0
+offset_bottom = 352.0
+text = "Anterior"
 
-[node name="WorksWithLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("2_7m6tr")
-theme_override_font_sizes/normal_font_size = 32
-bbcode_enabled = true
+[node name="NextButton" type="Button" parent="."]
+offset_left = 512.0
+offset_top = 328.0
+offset_right = 589.0
+offset_bottom = 352.0
+text = "Siguiente"
+
+[connection signal="pressed" from="PreviousButton" to="." method="_on_previous_button_pressed"]
+[connection signal="pressed" from="NextButton" to="." method="_on_next_button_pressed"]

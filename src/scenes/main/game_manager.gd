@@ -1,5 +1,7 @@
 extends Node
 
+const Potion = Classes.Potion
+
 # STAGE CAMERA
 @export_category("Stage camera settings")
 @export
@@ -19,16 +21,34 @@ var envelope_stage: Node2D
 @export_category("Alchemy stage settings")
 @export
 var alchemy_stage: Node2D
-@onready
-var saved_mix_dict
+
+# DIARY STAGE
+var unlocked_potions: Array[Potion]
+
+var healed = 0
+var deceased = 0
 
 func _ready() -> void:
 	# Setup camera stuff
 	stage_camera.stages = stages
 	stage_camera.movement_animation_duration = animation_duration
 	await alchemy_stage.ready
-	saved_mix_dict = alchemy_stage.get_node("AlchemyEngine").saved_mix_dict
 
+func _process(delta: float) -> void:
+	envelope_stage.set_score(healed, deceased)
 
 func _camera_stage_changed(stage: Vector2i) -> void:
 	current_stage = stage
+
+func unlocked_potion_array():
+	var unlocked_potions: Array[Potion] = []
+	for key in Potion.list:
+		if (Potion.list[key]):
+			unlocked_potions.append(key)
+	return unlocked_potions
+
+func add_healed():
+	healed += 1
+
+func add_deceased():
+	deceased += 1

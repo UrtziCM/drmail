@@ -31,7 +31,7 @@ func _show_envelope_contents():
 	var bring_to_front_tween: Tween = create_tween()
 	bring_to_front_tween.set_trans(Tween.TRANS_SINE)
 	bring_to_front_tween.set_ease(Tween.EASE_OUT)
-	bring_to_front_tween.parallel().tween_property(self,"position",Vector2(get_viewport().size * 0.25),.5)
+	bring_to_front_tween.parallel().tween_property(self,"position",Vector2(get_viewport().size.x * 0.4,get_viewport().size.y * 0.25),.5)
 	bring_to_front_tween.parallel().tween_property(self,"scale",Vector2.ONE * 3,.5)
 	
 	focused = true

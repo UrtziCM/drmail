@@ -27,13 +27,13 @@ position = Vector2(639, 0)
 [node name="Envelopes" parent="." instance=ExtResource("3_swx6c")]
 envelope_layer = 32768
 
+[node name="CheckPotions" parent="." instance=ExtResource("5_otuef")]
+position = Vector2(640, 360)
+
 [node name="[ --------- EXTRAS --------- ]" type="Node" parent="."]
 
 [node name="StageCamera" type="Camera2D" parent="."]
 anchor_mode = 0
 script = ExtResource("2_1rxwh")
-
-[node name="CheckPotions" parent="." instance=ExtResource("5_otuef")]
-position = Vector2(640, 360)
 
 [connection signal="stage_changed" from="StageCamera" to="GameManager" method="_camera_stage_changed"]

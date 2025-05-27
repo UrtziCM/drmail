@@ -15,6 +15,9 @@ var card_spawn_initial_position: Vector2 = get_node("CardStartingSpawnPosition")
 var card_marker_initial_position: Vector2 = get_node("CardSpawnPosition").position
 var new_card_position_coords: Vector2 = Vector2.ONE
 
+@onready var healed_label = get_node("HBoxContainer/CuredPatientsCountLabel")
+@onready var deceased_label = get_node("HBoxContainer/DeceasedPatientsCountLabel")
+
 const CARD_SEPARATION: float = 64
 
 @export_flags_2d_physics
@@ -44,7 +47,7 @@ func add_envelope(_illness: Illness):
 	new_envelope.envelope_ready = true
 	
 
-	if new_card_position_coords.x < 4:
+	if new_card_position_coords.x < 3:
 		new_card_position_coords.x += 1
 	else:
 		new_card_position_coords.x = 1
@@ -80,3 +83,7 @@ func try_grab(pos: Vector2) -> CharacterBody2D:
 		grabbed_envelope = grab_cast.get_collider()
 	grab_cast.queue_free() # Remove trailing raycast after usage
 	return grabbed_envelope
+
+func set_score(healed, deceased):
+	healed_label.text = str(healed)
+	deceased_label.text = str(deceased)

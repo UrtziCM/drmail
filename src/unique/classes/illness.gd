@@ -66,31 +66,22 @@ class Symptom extends RefCounted:
 
 class Illness extends RefCounted:
 	var symptoms: Array[Symptom]
-	var cured_symptoms: Array[Symptom]
 
 	@warning_ignore("shadowed_variable")
 	func _init(symptoms: Array[Symptom]) -> void:
 		self.symptoms = symptoms
-		self.cured_symptoms = []
 
-	func apply_potion(potion: Potion):
+	func apply_potions(potions: Array[Potion]) -> bool: # Returns if it's cured
+		var cured_symptoms = []
 		for symptom: Symptom in symptoms:
-			for effect: Effect in potion.effects:
-				if symptom.counter_effect.equals(effect):
-					if symptom.is_perfect_required and effect.perfect_dose:
-						cured_symptoms.append(symptom)
-					else:
-						cured_symptoms.append(symptom)
-
-	func is_cured() -> bool:
-		return symptoms.size() == cured_symptoms.size()
-
-	func cure_percentage() -> float:
-		return float(cured_symptoms.size()) / float(symptoms.size())
-
+			for potion: Potion in potions:
+				if symptom.counter_effect == potion.effect:
+					cured_symptoms.append(symptom)
+		return cured_symptoms.size() == symptoms.size()
+	
 	static func create_random_illness():
 		var random_symptoms: Array[Symptom] = []
-		var total_symptom_count = randi_range(1,4)
+		var total_symptom_count = randi_range(1,2)
 		
 		for _index in total_symptom_count:
 			var rand_symptom = Symptom.list.pick_random()
