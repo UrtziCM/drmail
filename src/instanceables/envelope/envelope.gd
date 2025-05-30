@@ -47,7 +47,7 @@ func _hide_envelope_contents():
 	bring_to_front_tween.set_trans(Tween.TRANS_SINE)
 	bring_to_front_tween.set_ease(Tween.EASE_OUT)
 	bring_to_front_tween.parallel().tween_property(self,"position",original_position,.5)
-	bring_to_front_tween.parallel().tween_property(self,"scale",Vector2.ONE,.5)
+	bring_to_front_tween.parallel().tween_property(self,"scale",Vector2.ONE * 3,.5)
 	
 	if panel:
 		panel.queue_free()

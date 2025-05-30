@@ -31,7 +31,7 @@ const bye_statements: Array[String] = [
 
 static func get_text_for_illness(illness: Illness) -> String:
 	var salute = hello_statements.pick_random()
-	var explanation: String = "Mi " + family_members.pick_random() + " tiene los siguiente sítomas:"
+	var explanation: String = "Mi " + family_members.pick_random() + " tiene los siguientes sítomas:"
 	
 	for symptom in illness.symptoms:
 		explanation += "\n\t - " + symptom.description

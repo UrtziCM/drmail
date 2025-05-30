@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bb4kyitfhynf0"]
 
-[ext_resource type="Texture2D" uid="uid://8635eqsig15p" path="res://icon.svg" id="1_qrywg"]
+[ext_resource type="Texture2D" uid="uid://cao0bdtlgtq6m" path="res://assets/mail/card_interior.png" id="1_qrywg"]
 
 [node name="CardPanel" type="Control"]
 top_level = true
@@ -18,7 +18,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CardBackground" type="NinePatchRect" parent="."]
-self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +35,8 @@ layout_mode = 0
 offset_left = 32.0
 offset_top = 32.0
 offset_right = 208.0
-offset_bottom = 168.0
+offset_bottom = 152.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 
 [node name="ExitButton" type="Button" parent="."]
 layout_mode = 0

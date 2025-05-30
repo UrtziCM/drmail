@@ -11,8 +11,23 @@ script = ExtResource("1_e0cux")
 [node name="CardTextFabricator" type="Node" parent="."]
 script = ExtResource("2_e0cux")
 
-[node name="CardSpawnPosition" type="Marker2D" parent="."]
-position = Vector2(128, 64)
+[node name="CardSpawnPosition1" type="Marker2D" parent="."]
+position = Vector2(112, 112)
+rotation = 0.785398
+gizmo_extents = 32.0
+
+[node name="CardSpawnPosition2" type="Marker2D" parent="."]
+position = Vector2(312, 112)
+rotation = 0.785398
+gizmo_extents = 32.0
+
+[node name="CardSpawnPosition3" type="Marker2D" parent="."]
+position = Vector2(112, 272)
+rotation = 0.785398
+gizmo_extents = 32.0
+
+[node name="CardSpawnPosition4" type="Marker2D" parent="."]
+position = Vector2(312, 272)
 rotation = 0.785398
 gizmo_extents = 32.0
 
@@ -27,9 +42,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 392.0
+offset_left = 408.0
 offset_top = 296.0
-offset_right = 624.0
+offset_right = 640.0
 offset_bottom = 344.0
 grow_horizontal = 0
 grow_vertical = 0

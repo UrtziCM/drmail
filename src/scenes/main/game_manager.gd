@@ -23,6 +23,9 @@ var envelope_stage: Node2D
 var alchemy_stage: Node2D
 
 # DIARY STAGE
+@export_category("Check potions settings")
+@export
+var check_potions_stage: Node2D
 var unlocked_potions: Array[Potion]
 
 var healed = 0
@@ -39,6 +42,9 @@ func _process(delta: float) -> void:
 
 func _camera_stage_changed(stage: Vector2i) -> void:
 	current_stage = stage
+	
+	if stage == Vector2i(1,1):
+		check_potions_stage.show_page(check_potions_stage.current_page_index)
 
 func unlocked_potion_array():
 	var unlocked_potions: Array[Potion] = []

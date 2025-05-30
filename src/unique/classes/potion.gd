@@ -24,8 +24,8 @@ class Potion extends RefCounted:
 		return null
 	
 	static var list: Dictionary[Potion, bool] = {
-		new("Afisirox", Effect.ANTI_BIOTIC, 0, 1): false,
-		new("", Effect.ANTI_PIRETIC, 0, 0): false,
+		new("Afisirox", Effect.ANTI_BIOTIC, 0, -1): false,
+		new("", Effect.ANTI_PIRETIC, 0, 1): false,
 		new("", Effect.LAXATIVE, 0 ,1): false,
 		
 		new("", Effect.ANTI_ACID, 1): false,
@@ -67,7 +67,9 @@ class Potion extends RefCounted:
 		{10: 5, 12:6, 15:8, 16:5}:list.keys()[12],
 		{10: 5, 11:6, 13:4, 14:4, 16:5}:list.keys()[13],
 		{10:5, 11:6, 12:3, 13:2, 14:8}:list.keys()[14],
-		#10.5 11.6 13.4 45.4 16.5
+		{10:5, 11:6, 13:4, 15:4, 16:5}:list.keys()[15],
+		{11:12,12:3,13:4,16:5}:list.keys()[16],
+		
 	}
 	
 	@warning_ignore("shadowed_variable")
@@ -94,7 +96,6 @@ class Potion extends RefCounted:
 		if hide_type == HIDE_TYPE.NONE || Potion.list[self]:
 			for key in potion_effect_dict.keys():
 				potion_ingredients_text += str(potion_effect_dict[key] / Ingredient.list[key - 1].pattern_block_count) + "x " + Ingredient.list[key - 1].name + "\n"
-				prints(potion_effect_dict[key],"/",Ingredient.list[key - 1].pattern_block_count)
 		elif hide_type == HIDE_TYPE.INGREDIENT:
 			var sw = 0
 			for key in potion_effect_dict.keys():

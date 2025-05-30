@@ -8,52 +8,60 @@ var GameManager: Node = get_tree().get_first_node_in_group("GameManager")
 var envelope_instanceable: PackedScene = preload("res://src/instanceables/envelope/envelope.tscn")
 
 @onready
-var card_spawn_marker: Marker2D = get_node("CardSpawnPosition") # Out of bounds spawn position
+var card_spawn_marker: Marker2D = get_node("CardStartingSpawnPosition") # Out of bounds spawn position
 @onready
 var card_spawn_initial_position: Vector2 = get_node("CardStartingSpawnPosition").position
+
 @onready
-var card_marker_initial_position: Vector2 = get_node("CardSpawnPosition").position
-var new_card_position_coords: Vector2 = Vector2.ONE
+var card_spawn_positions = [
+	get_node("CardSpawnPosition1"),
+	get_node("CardSpawnPosition2"),
+	get_node("CardSpawnPosition3"),
+	get_node("CardSpawnPosition4"),
+]
+
+var new_card_position_coords: Vector2 = Vector2.ZERO
 
 @onready var healed_label = get_node("HBoxContainer/CuredPatientsCountLabel")
 @onready var deceased_label = get_node("HBoxContainer/DeceasedPatientsCountLabel")
 
-const CARD_SEPARATION: float = 64
+const CARD_SEPARATION: float = 128
 
 @export_flags_2d_physics
 var envelope_layer
+var envelopes: Array[CharacterBody2D] = []
 
 var focused_envelope: CharacterBody2D # The envelope taht is in the center of the scree 
 
-func _ready() -> void:
-	for i in 15:
-		await add_envelope(null)
 
-func add_envelope(_illness: Illness): 
+
+var day = 0
+
+func _ready() -> void:
+	for i in 3:
+		await add_envelope()
+
+func next_day():
+	day += 1
+
+func add_envelope(): 
 	var new_envelope = envelope_instanceable.instantiate()
-	new_envelope.position = card_spawn_initial_position
-	new_envelope.scale = Vector2.ONE * 2.5
+	new_envelope.position = card_spawn_marker.position
+	new_envelope.scale = Vector2.ONE * 5
 	new_envelope.rotation_degrees = randf_range(0,359)
 	new_envelope.root_scene = self
 	add_child(new_envelope)
+	envelopes.append(new_envelope)
 	
 	var new_envelope_tween: Tween = create_tween()
 	new_envelope_tween.set_trans(Tween.TRANS_SINE)
 	new_envelope_tween.set_ease(Tween.EASE_OUT)
-	new_envelope_tween.parallel().tween_property(new_envelope,"scale", Vector2.ONE, 1) # Give fake height
-	new_envelope_tween.parallel().tween_property(new_envelope,"position", card_spawn_marker.position, 1) # Move to center of screen
+	new_envelope_tween.parallel().tween_property(new_envelope,"scale", Vector2.ONE * 3, 1) # Give fake height
+	new_envelope_tween.parallel().tween_property(new_envelope,"position", card_spawn_positions[envelopes.size() - 1].position, 1) # Move to center of screen
 	new_envelope_tween.parallel().tween_property(new_envelope,"rotation_degrees", 0, 1) # Rotate back to initial pos
 	await new_envelope_tween.finished
 	new_envelope.envelope_ready = true
 	
-
-	if new_card_position_coords.x < 3:
-		new_card_position_coords.x += 1
-	else:
-		new_card_position_coords.x = 1
-		new_card_position_coords.y += 1
-	card_spawn_marker.position.x = CARD_SEPARATION * new_card_position_coords.x * 2
-	card_spawn_marker.position.y = CARD_SEPARATION * new_card_position_coords.y
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and GameManager.current_stage == Vector2i.ZERO:

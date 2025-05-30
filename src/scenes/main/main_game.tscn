@@ -8,7 +8,7 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("stage_camera", "envelope_stage", "alchemy_stage") groups=["GameManager"]]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("stage_camera", "envelope_stage", "alchemy_stage", "check_potions_stage") groups=["GameManager"]]
 script = ExtResource("1_6w3yq")
 stage_camera = NodePath("../StageCamera")
 stages = Dictionary[String, Vector2i]({
@@ -18,6 +18,7 @@ stages = Dictionary[String, Vector2i]({
 })
 envelope_stage = NodePath("../Envelopes")
 alchemy_stage = NodePath("../AlchemyReworked")
+check_potions_stage = NodePath("../CheckPotions")
 
 [node name="[ --------- STAGES --------- ]" type="Node" parent="."]
 
