@@ -16,34 +16,30 @@ class Potion extends RefCounted:
 	
 	
 	static var EMPTY = new("",null)
-	
-	static func get_potion_by_name(name: String) -> Potion:
-		for potion in list.keys():
-			if potion.name == name:
-				return potion
-		return null
+
 	
 	static var list: Dictionary[Potion, bool] = {
 		new("Afisirox", Effect.ANTI_BIOTIC, 0, -1): false,
-		new("", Effect.ANTI_PIRETIC, 0, 1): false,
-		new("", Effect.LAXATIVE, 0 ,1): false,
+		new("Aloplan", Effect.ANTI_PIRETIC, 0, 1): false,
+		new("Bonivax", Effect.LAXATIVE, 0 ,1): false,
 		
-		new("", Effect.ANTI_ACID, 1): false,
-		new("", Effect.ANTI_FUNGHAL, 1): false,
-		new("", Effect.ANTI_HISTAMINIC, 1): false,
-		new("", Effect.ANTI_PARASITIC, 1): false,
+		new("Tribazine", Effect.ANTI_ACID, 1): false,
+		new("Monoranon", Effect.ANTI_FUNGHAL, 1): false,
+		new("Fenonesin", Effect.ANTI_HISTAMINIC, 1): false,
+		new("Zithrolazine", Effect.ANTI_PARASITIC, 1): false,
 		
-		new("", Effect.NARCOTIC, 2): false,
-		new("", Effect.OPIATE, 2): false,
-		new("", Effect.MUCOLITIC, 2): false,
-		new("", Effect.ANTI_PIRETIC, 2): false, # I NEED MORE EFFECTS
-		new("", Effect.ANTI_PIRETIC, 2): false,
-		new("", Effect.ANTI_PIRETIC, 2): false,
-		new("", Effect.ANTI_PIRETIC, 2): false,
-		new("", Effect.ANTI_PIRETIC, 2): false,
+		new("Adrenaronate", Effect.NARCOTIC, 2): false,
+		new("Prototisol", Effect.OPIATE, 2): false,
+		new("Doxiride", Effect.MUCOLITIC, 2): false,
+		new("Dexlanvax", Effect.ANTI_PIRETIC, 2): false, # I NEED MORE EFFECTS
+		new("Nitrostryl", Effect.ANTI_BIOTIC, 2): false,
+		new("Zanaxamine", Effect.LAXATIVE, 2): false,
+		new("Desirodine", Effect.ANTI_ACID, 2): false,
+		new("Subocept", Effect.ANTI_FUNGHAL, 2): false,
 		
-		new("", Effect.ANTI_PIRETIC, 2): false,
-		new("", Effect.ANTI_PIRETIC, 2): false,
+		new("Exucept", Effect.ANTI_HISTAMINIC, 2): false,
+		new("Calciumid", Effect.ANTI_PARASITIC, 2): false,
+		new("Kalyrase", Effect.NARCOTIC, 2): false,
 		
 	}
 	
@@ -69,6 +65,7 @@ class Potion extends RefCounted:
 		{10:5, 11:6, 12:3, 13:2, 14:8}:list.keys()[14],
 		{10:5, 11:6, 13:4, 15:4, 16:5}:list.keys()[15],
 		{11:12,12:3,13:4,16:5}:list.keys()[16],
+		{10:5, 12:6, 13:4, 15:4, 16: 5}:list.keys()[17],
 		
 	}
 	
@@ -82,6 +79,14 @@ class Potion extends RefCounted:
 	func duplicate() -> Potion:
 		var dup = new(self.name,self.effect)
 		return dup
+	
+	
+	static func get_potion_by_name(name: String) -> Potion:
+		prints("Potion name:", name)
+		for potion in list.keys():
+			if potion.name == name:
+				return potion
+		return null
 	
 	static func from_pattern(pattern: Dictionary[int,int]):
 		return MEDICINE_DICT[pattern]

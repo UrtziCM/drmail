@@ -38,11 +38,24 @@ var focused_envelope: CharacterBody2D # The envelope taht is in the center of th
 var day = 0
 
 func _ready() -> void:
-	for i in 3:
+	for i in 4:
 		await add_envelope()
 
 func next_day():
 	day += 1
+
+func get_free_envelope_space() -> Vector2:
+	if envelopes.size() <=3:
+		for envelope_spawn_pos in card_spawn_positions:
+			var pos = envelope_spawn_pos.position
+			var free = true
+			for envelope in envelopes:
+				if envelope.position.is_equal_approx(pos):
+					free = false
+					break
+			if free:
+				return pos
+	return Vector2.ZERO
 
 func add_envelope(): 
 	var new_envelope = envelope_instanceable.instantiate()
@@ -51,23 +64,23 @@ func add_envelope():
 	new_envelope.rotation_degrees = randf_range(0,359)
 	new_envelope.root_scene = self
 	add_child(new_envelope)
-	envelopes.append(new_envelope)
 	
 	var new_envelope_tween: Tween = create_tween()
 	new_envelope_tween.set_trans(Tween.TRANS_SINE)
 	new_envelope_tween.set_ease(Tween.EASE_OUT)
 	new_envelope_tween.parallel().tween_property(new_envelope,"scale", Vector2.ONE * 3, 1) # Give fake height
-	new_envelope_tween.parallel().tween_property(new_envelope,"position", card_spawn_positions[envelopes.size() - 1].position, 1) # Move to center of screen
+	new_envelope_tween.parallel().tween_property(new_envelope,"position", get_free_envelope_space(), 1) # Move to center of screen
 	new_envelope_tween.parallel().tween_property(new_envelope,"rotation_degrees", 0, 1) # Rotate back to initial pos
 	await new_envelope_tween.finished
 	new_envelope.envelope_ready = true
 	
+	envelopes.append(new_envelope)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and GameManager.current_stage == Vector2i.ZERO:
 		var envelope: CharacterBody2D = await try_grab(event.position)
 		if envelope: # We clicked an envelope
-			if event.is_double_click():
+			#if event.is_double_click():
 				if not focused_envelope: # No envelope is focused rn
 					focused_envelope = envelope
 					envelope._show_envelope_contents() # show correspondence
@@ -75,7 +88,7 @@ func _input(event: InputEvent) -> void:
 					if envelope != focused_envelope: # Only do something when the envelope is new
 						await focused_envelope._hide_envelope_contents()
 						focused_envelope = envelope
-						envelope._show_envelope_contents()
+						await envelope._show_envelope_contents()
 
 func try_grab(pos: Vector2) -> CharacterBody2D:
 	var grab_cast: RayCast2D = RayCast2D.new()
@@ -91,6 +104,9 @@ func try_grab(pos: Vector2) -> CharacterBody2D:
 		grabbed_envelope = grab_cast.get_collider()
 	grab_cast.queue_free() # Remove trailing raycast after usage
 	return grabbed_envelope
+
+func remove_envelope(envelope: Node2D):
+	envelopes.erase(envelope)
 
 func set_score(healed, deceased):
 	healed_label.text = str(healed)

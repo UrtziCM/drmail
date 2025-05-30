@@ -73,6 +73,7 @@ class Illness extends RefCounted:
 
 	func apply_potions(potions: Array[Potion]) -> bool: # Returns if it's cured
 		var cured_symptoms = []
+		print(potions)
 		for symptom: Symptom in symptoms:
 			for potion: Potion in potions:
 				if symptom.counter_effect == potion.effect:

@@ -69,8 +69,9 @@ static func send(creator: Node2D,send_list: ItemList):
 	var selected_potions: Array[Potion] = []
 	for potion_index in send_list.get_selected_items():
 		var potion_name = send_list.get_item_text(potion_index)
-		selected_potions.append(Potion.get_potion_by_name(potion_name))
+		selected_potions.append(Potion.get_potion_by_name(potion_name.split(" ")[0])) # I use this cause potion name also contains effect (e.g. "Asfirox - Antibiótico")
 	if creator.illness.apply_potions(selected_potions):
 		gm.add_healed()
 	else:
 		gm.add_deceased()
+	gm.add_envelope(creator)

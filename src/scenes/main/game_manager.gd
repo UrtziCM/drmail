@@ -46,6 +46,10 @@ func _camera_stage_changed(stage: Vector2i) -> void:
 	if stage == Vector2i(1,1):
 		check_potions_stage.show_page(check_potions_stage.current_page_index)
 
+func add_envelope(envelope):
+	envelope_stage.remove_envelope(envelope)
+	envelope_stage.add_envelope()
+
 func unlocked_potion_array():
 	var unlocked_potions: Array[Potion] = []
 	for key in Potion.list:
